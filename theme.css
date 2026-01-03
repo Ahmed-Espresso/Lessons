@@ -1,0 +1,165 @@
+@supports not (--custom: value) {
+body {
+  background-color: #0d1b2a; color: white; }
+}
+
+html {
+  visibility: hidden;
+  transition: all 4s ease-in-out;
+}
+
+html.theme-day,
+html.theme-wine,
+html.theme-sunset,
+html.theme-coffee {
+  visibility: visible;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* Navigation Colors */
+#nav-btn .nav-btn__item i,
+#nav-btn .nav-btn__item span {
+  color: var(--nav-btn-color) !important;
+  transition: color 3s ease !important;
+  will-change: color;
+}
+
+/* Canvas Backgrounds */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 6s ease;
+}
+
+.theme-day {
+  background-color: #0d1b2a;
+}
+
+.theme-wine {
+  background-color: #315426;
+}
+
+.theme-sunset {
+  background: #4a0033;
+}
+
+.theme-coffee {
+  background-color: #4b382a;
+}
+
+.theme-day #day-canvas,
+.theme-wine #wine-canvas,
+.theme-sunset #sunset-canvas,
+.theme-coffee #coffee-canvas {
+  opacity: 1;
+}
+
+/* Wine Theme Overlay */
+.theme-wine::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center,
+    rgba(157,114,67,0.2) 0%,
+    rgba(157,114,67,0) 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ==================== THEME VARIABLES ==================== */
+/* Day Theme */
+html.theme-day {
+  --section-bg: rgba(0,0,0,0);
+  --bg: #0d1b2a;
+  --bg-text: #ff9e64;
+  --bot-bg: rgba(65, 90, 119, 0.7);
+  --user-msg-bg: rgba(65, 90, 119, 0.9);
+  --user-msg-border: rgba(65, 90, 119, 0.9);
+  --user-msg-text: #ff9e64;
+  --user-msg-arrow-bg: rgba(65, 90, 119, 0.9);
+  --input-text-color: #ff9e64;
+  --input-placeholder-color: #ff9e64;
+  --input-icon-color: #ff9e64;
+  --bot-btn-bg: rgba(65, 90, 119, 0.7);
+  --bot-name: #ff9e64;
+  --bot-btn-border: rgba(65, 90, 119, 0.7);
+  --bot-btn-hover-bg: rgba(65, 90, 119, 0.1);
+  --bot-btn-before-bg: rgba(65, 90, 119, 0.7);
+  --bg-card: rgba(0,0,0,0.6);
+}
+
+/* Wine Theme */
+html.theme-wine {
+  --section-bg: rgba(0,0,0,0);
+  --bg: #315426;
+  --bg-text:  #c0b49e;
+  --bot-bg: #c0b49e;
+  --user-msg-bg: #315426;
+  --user-msg-border: #315426;
+  --user-msg-text: #c0b49e;
+  --user-msg-arrow-bg: #315426;
+  --input-text-color: #c0b49e;
+  --input-placeholder-color: #315426;
+  --input-icon-color: #315426;
+  --bot-btn-bg: rgba(255, 255, 255, 0.1);
+  --bot-name:  #315426;
+  --bot-btn-border: #c0b49e;
+  --bot-btn-hover-bg: #c0b49e;
+  --bot-btn-before-bg: rgba(255, 255, 255, 0.7);
+  --bg-card: rgba(0,0,0,0.6);
+}
+
+/* Sunset Theme */
+html.theme-sunset {
+  --section-bg: rgba(0,0,0,0);
+  --bg: #4a0033;
+  --bg-text: #c0b49e;
+  --bot-bg: #c0b49e;
+  --user-msg-bg: #4a0033;
+  --user-msg-border: #4a0033;
+  --user-msg-text: #c0b49e;
+  --user-msg-arrow-bg: #4a0033;
+  --input-text-color: #c0b49e;
+  --input-placeholder-color: #4a0033;
+  --input-icon-color: #4a0033;
+  --bot-btn-bg: rgba(255, 255, 255, 0.1);
+  --bot-name: #4a0033;
+  --bot-btn-border: #c0b49e;
+  --bot-btn-hover-bg: #c0b49e;
+  --bot-btn-before-bg: rgba(255, 255, 255, 0.7);
+  --bg-card: rgba(0,0,0,0.6);
+}
+
+/* Coffee Theme */
+html.theme-coffee {
+  --section-bg: rgba(0,0,0,0);
+  --bg: #4b382a;
+  --bg-text: #fff3cc;
+  --bot-bg: #6e5849;
+  --user-msg-bg: #fff3cc;
+  --user-msg-border: #fff3cc;
+  --user-msg-text: black;
+  --user-msg-arrow-bg: #fff3cc;
+  --input-text-color: #fff3cc;
+  --input-placeholder-color: #fff3cc;
+  --input-icon-color: #fff3cc;
+  --bot-btn-bg: #4b382a20;
+  --bot-name:  #fff3cc;
+  --bot-btn-border: #4b382a20;
+  --bot-btn-hover-bg: #4b382a80;
+  --bot-btn-before-bg: #4b382a20;
+  --bg-card: rgba(0,0,0,0.6);
+}
