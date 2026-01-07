@@ -1,0 +1,327 @@
+@supports not (--custom: value) {
+body {
+  background-color: #0d1b2a; color: white; }
+}
+
+html {
+  visibility: hidden;
+  transition: all 4s ease-in-out;
+}
+
+html.theme-night,
+html.theme-apple,
+html.theme-wine,
+html.theme-coffee,
+html.theme-space,
+html.theme-water,
+html.theme-wild {
+  visibility: visible;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* Navigation Colors */
+#nav-btn .nav-btn__item i,
+#nav-btn .nav-btn__item span {
+  color: var(--nav-btn-color) !important;
+  transition: color 3s ease !important;
+  will-change: color;
+}
+
+/* Canvas Backgrounds */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 6s ease;
+}
+
+.theme-night {
+ background-color: #0d1b2a;
+}
+
+.theme-apple {
+  background-color: #315426;
+}
+
+.theme-wine {
+  background: #4a0033;
+}
+
+.theme-coffee {
+  background-color: #4b382a;
+}
+
+.theme-space {
+  background-color: #000010;
+}
+
+.theme-water {
+  background-color:  #26A69A;
+}
+
+.theme-wild {
+  background-color:  #4B0082;
+}
+
+.theme-night #night-canvas,
+.theme-apple #apple-canvas,
+.theme-wine #wine-canvas,
+.theme-coffee #coffee-canvas,
+.theme-space #space-canvas,
+.theme-water #water-canvas,
+.theme-wild #wild-canvas {
+  opacity: 1;
+}
+
+/* apple Theme Overlay */
+.theme-apple::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center,
+    rgba(157,114,67,0.2) 0%,
+    rgba(157,114,67,0) 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ==================== THEME VARIABLES ==================== */
+/* night Theme */
+html.theme-night {
+  --section-bg: rgba(0,0,0,0);
+  --bg: #0d1b2a;
+  --bg-text: #ff9e64;
+  --bot-bg: rgba(65, 90, 119, 0.7);
+  --user-msg-bg: rgba(65, 90, 119, 0.9);
+  --user-msg-border: rgba(65, 90, 119, 0.9);
+  --user-msg-text: #ff9e64;
+  --user-msg-arrow-bg: rgba(65, 90, 119, 0.9);
+  --input-text-color: #ff9e64;
+  --input-placeholder-color: #ff9e64;
+  --input-icon-color: #ff9e64;
+  --bot-btn-bg: rgba(65, 90, 119, 0.7);
+  --bot-name: #ff9e64;
+  --bot-btn-border: rgba(65, 90, 119, 0.7);
+  --bot-btn-hover-bg: rgba(65, 90, 119, 0.1);
+  --bot-btn-before-bg: rgba(65, 90, 119, 0.7);
+  --bg-card: rgba(0,0,0,0.6);
+}
+
+/* apple Theme */
+html.theme-apple {
+  --section-bg: rgba(0,0,0,0);
+  --bg: #315426;
+  --bg-text:  #c0b49e;
+  --bot-bg: #c0b49e;
+  --user-msg-bg: #315426;
+  --user-msg-border: #315426;
+  --user-msg-text: #c0b49e;
+  --user-msg-arrow-bg: #315426;
+  --input-text-color: #c0b49e;
+  --input-placeholder-color: #315426;
+  --input-icon-color: #315426;
+  --bot-btn-bg: rgba(255, 255, 255, 0.1);
+  --bot-name:  #315426;
+  --bot-btn-border: #c0b49e;
+  --bot-btn-hover-bg: #c0b49e;
+  --bot-btn-before-bg: rgba(255, 255, 255, 0.7);
+  --bg-card: rgba(0,0,0,0.6);
+}
+
+html.theme-apple .typing-indicator .dot {
+  background: var(--bg);
+}
+
+/* wine Theme */
+html.theme-wine {
+  --section-bg: rgba(0,0,0,0);
+  --bg: #4a0033;
+  --bg-text: #c0b49e;
+  --bot-bg: #c0b49e;
+  --user-msg-bg: #4a0033;
+  --user-msg-border: #4a0033;
+  --user-msg-text: #c0b49e;
+  --user-msg-arrow-bg: #4a0033;
+  --input-text-color: #c0b49e;
+  --input-placeholder-color: #4a0033;
+  --input-icon-color: #4a0033;
+  --bot-btn-bg: rgba(255, 255, 255, 0.1);
+  --bot-name: #4a0033;
+  --bot-btn-border: #c0b49e;
+  --bot-btn-hover-bg: #c0b49e;
+  --bot-btn-before-bg: rgba(255, 255, 255, 0.7);
+  --bg-card: rgba(0,0,0,0.6);
+}
+
+html.theme-wine .typing-indicator .dot {
+  background: var(--bg);
+}
+/* Coffee Theme */
+html.theme-coffee {
+  --section-bg: rgba(0,0,0,0);
+  --bg: #4b382a;
+  --bg-text: #fff3cc;
+  --bot-bg: #6e5849;
+  --user-msg-bg: #fff3cc;
+  --user-msg-border: #fff3cc;
+  --user-msg-text: black;
+  --user-msg-arrow-bg: #fff3cc;
+  --input-text-color: #fff3cc;
+  --input-placeholder-color: #fff3cc;
+  --input-icon-color: #fff3cc;
+  --bot-btn-bg: #4b382a20;
+  --bot-name:  #fff3cc;
+  --bot-btn-border: #4b382a20;
+  --bot-btn-hover-bg: #4b382a80;
+  --bot-btn-before-bg: #4b382a20;
+  --bg-card: rgba(0,0,0,0.6);
+}
+
+/* space Theme */
+html.theme-space {
+  --section-bg: rgba(0,0,0,0);
+  --bg:  #000010;
+  --bg-text:  rgba(0, 191, 255, 1);
+  --bot-bg: rgba(0, 10, 30, 0.8);
+  --bot-name: #4fc3f7; 
+  --user-msg-bg: #0d47a1; 
+  --user-msg-border: #1e88e5; 
+  --user-msg-text: #e3f2fd; 
+  --user-msg-arrow-bg: #0d47a1; 
+  --input-text-color: #ffffff; 
+  --input-placeholder-color: #90caf9; 
+  --input-icon-color: #4fc3f7; 
+  --bot-btn-bg: linear-gradient(135deg, #0d47a1 0%, #1e88e5 100%); 
+  --bot-btn-border: #4fc3f7; 
+  --bot-btn-hover-bg: linear-gradient(135deg, #1e88e5 0%, #4fc3f7 100%); 
+  --bot-btn-before-bg: rgba(79, 195, 247, 0.3); 
+  --bot-typing-dot: #4fc3f7; 
+  --bot-shadow: 0 0 20px rgba(13, 71, 161, 0.3); 
+  --bot-glow: 0 0 10px rgba(79, 195, 247, 0.5); 
+  --bg-card: rgba(0,0,0,0.0);
+}
+
+/* water Theme */
+html.theme-water {
+  --section-bg: rgba(0,0,0,0);
+  --bg:  #26A69A;
+  --bg-text:  white;
+  --bot-bg:  #00796B;
+  --user-msg-bg:  #26A69A; 
+  --user-msg-border: #26A69A;
+  --user-msg-text: white; 
+  --user-msg-arrow-bg: #26A69A; 
+  --input-text-color: white;
+  --input-placeholder-color:white;
+  --input-icon-color: white;
+  --bot-btn-bg:#00796B;
+  --bot-btn-border:#26A69A ;
+  --bot-btn-hover-bg:#26A69A ; 
+  --bot-btn-before-bg: #26A69A ;
+  --bot-name: white;
+  --bg-card: rgba(0,0,0,0.6);
+}
+
+/* wild Theme */
+html.theme-wild {
+  --section-bg: rgba(0,0,0,0);
+  --bg:  #4B0082;
+  --bg-text: #ffd700;
+  --bot-bg:  #B8860B;
+  --user-msg-bg: #4B0082 ; 
+  --user-msg-border: #4B0082;
+  --user-msg-text:#fff8e1 ; 
+  --user-msg-arrow-bg: #4B0082; 
+  --input-text-color: #4B0082;
+  --input-placeholder-color: #4B0082;
+  --input-icon-color: #4B0082;
+  --bot-btn-bg:  linear-gradient(135deg, #B8860B 0%, #8B6508 100%);
+  --bot-btn-border: linear-gradient(135deg, #B8860B 0%, #8B6508 100%) ; 
+  --bot-btn-hover-bg:  linear-gradient(135deg, #B8860B 0%, #8B6508 100%); 
+  --bot-btn-before-bg:  linear-gradient(135deg, #B8860B 0%, #8B6508 100%);
+  --bot-name: white;
+  --bg-card: rgba(0,0,0,0.6);
+}
+
+/* ==================== تحسينات إضافية للبوت في ثيم الفضاء ==================== */
+html.theme-space .chat-container {
+  background: var(--bot-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(79, 195, 247, 0.2);
+  box-shadow: var(--bot-shadow);
+}
+
+html.theme-space .message.bot {
+  background: rgba(13, 71, 161, 0.8);
+  border: 1px solid rgba(30, 136, 229, 0.3);
+  color: var(--user-msg-text);
+}
+
+html.theme-space .message.user {
+  background: var(--user-msg-bg);
+  border: 1px solid var(--user-msg-border);
+  color: var(--user-msg-text);
+}
+
+html.theme-space .chat-input {
+  background: rgba(13, 71, 161, 0.3);
+  border: 1px solid rgba(79, 195, 247, 0.4);
+  color: var(--input-text-color);
+}
+
+html.theme-space .chat-input::placeholder {
+  color: var(--input-placeholder-color);
+  opacity: 0.8;
+}
+
+html.theme-space .welcome-btn {
+  background: var(--bot-btn-bg);
+  border: 1px solid var(--bot-btn-border);
+  color: #ffffff;
+  transition: all 3s ease;
+}
+
+html.theme-space .welcome-btn:hover {
+  background: var(--bot-btn-hover-bg);
+  box-shadow: var(--bot-glow);
+}
+
+html.theme-space .typing-indicator .dot {
+  background: var(--bot-typing-dot);
+}
+
+html.theme-space .send-btn,
+html.theme-space .voice-btn {
+  color: var(--input-icon-color);
+  transition: all 3s ease;
+}
+
+html.theme-space .send-btn:hover,
+html.theme-space .voice-btn:hover {
+  color: #ffffff;
+  text-shadow: 0 0 10px var(--input-icon-color);
+}
+
+html.theme-space .message.bot::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: -8px;
+  width: 8px;
+  height: 12px;
+  background-color: rgba(13, 71, 161, 0.8); 
+  clip-path: polygon(0 50%, 100% 0, 100% 100%);
+  transition: all 3s ease;
+}
