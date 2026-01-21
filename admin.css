@@ -1,0 +1,1514 @@
+/* تحسينات للعرض */
+:root {
+    --bg-text-rgb: 255, 255, 255; /* قيمة افتراضية */
+}
+
+/* ضبط قيمة RGB حسب الثيم */
+.theme-night { --bg-text-rgb: 255, 158, 100; }
+.theme-apple { --bg-text-rgb: 192, 180, 158; }
+.theme-wine { --bg-text-rgb: 192, 180, 158; }
+.theme-coffee { --bg-text-rgb: 255, 243, 204; }
+.theme-space { --bg-text-rgb: 0, 191, 255; }
+.theme-water { --bg-text-rgb: 255, 255, 255; }
+.theme-wild { --bg-text-rgb: 255, 215, 0; }
+
+/* ==================== النماذج العامة ==================== */
+/* هذه الأنماط لقسم رسالة الترحيب ومن نحن والأقسام الأخرى التي تستخدم admin-form */
+.admin-form {
+    padding: 1rem 0;
+}
+
+.admin-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.admin-form label {
+    display: block;
+    color: var(--bg-text);
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.admin-form input,
+.admin-form select,
+.admin-form textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--bg-text);
+    background: transparent;
+    color: var(--bg-text);
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.admin-form input:focus,
+.admin-form select:focus,
+.admin-form textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--bg-text-rgb), 0.1);
+    border-color: var(--bg-text);
+}
+
+.admin-form textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.admin-form .form-buttons {
+    margin-top: 2rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.admin-form .btn {
+    padding: 0.9rem 2rem;
+    border: 2px solid var(--bg-text);
+    background: var(--bg-text);
+    color: var(--bg);
+    border-radius: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    width: 80%; 
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.admin-form .btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+/* الفلاتر */
+.filters {
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filters select {
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--bg-text);
+    background: rgba(0,0,0,0.4);
+    color: var(--bg-text);
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    min-width: 200px;
+}
+
+.back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: transparent;
+    border: 2px solid var(--bg-text);
+    color: var(--bg-text);
+    border-radius: 0.75rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.back-btn:hover {
+    background: var(--bg-text);
+    color: var(--bg);
+}
+
+/* ==================== المودالات ==================== */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    padding: 15px;
+    overflow: hidden;
+}
+
+.modal-content-new {
+    background: var(--bg-card);
+    border-radius: 1.5rem;
+    border: 2px solid var(--bg-text);
+    max-width: 90%;
+    max-height: 90vh;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    height: auto;
+}
+
+.modal-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 2px solid var(--bg-text);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    background: var(--bg-card);
+    z-index: 1;
+    border-radius: 1.5rem 1.5rem 0 0;
+    flex-shrink: 0;
+    min-height: 70px;
+    box-sizing: border-box;
+}
+
+.modal-header h2 {
+    color: var(--bg-text);
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.modal-close-unified {
+    background: transparent;
+    border: none;
+    color: var(--bg-text);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.modal-close-unified:hover {
+    transform: rotate(90deg);
+}
+
+/* النموذج داخل المودال */
+.form-compact-new {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2rem;
+    min-height: 200px;
+    box-sizing: border-box;
+    position: relative;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var(--bg-text-rgb), 0.3) transparent;
+}
+
+.form-compact-new::-webkit-scrollbar {
+    width: 6px;
+}
+
+.form-compact-new::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.form-compact-new::-webkit-scrollbar-thumb {
+    background: rgba(var(--bg-text-rgb), 0.3);
+    border-radius: 3px;
+}
+
+.form-compact-new::-webkit-scrollbar-thumb:hover {
+    background: rgba(var(--bg-text-rgb), 0.5);
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.form-row .half {
+    flex: 1;
+    min-width: 200px;
+}
+
+.form-row .full {
+    flex: 2;
+    min-width: 100%;
+}
+
+.form-compact-new label {
+    display: block;
+    color: var(--bg-text);
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.form-compact-new input,
+.form-compact-new select,
+.form-compact-new textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid var(--bg-text);
+    background: transparent;
+    color: var(--bg-text);
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-compact-new input:focus,
+.form-compact-new select:focus,
+.form-compact-new textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--bg-text-rgb), 0.1);
+    border-color: var(--bg-text);
+}
+
+/* منطقة الأزرار */
+.form-actions {
+    padding: 1.5rem 2rem;
+    border-top: 2px solid var(--bg-text);
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    background: var(--bg-card);
+    flex-shrink: 0;
+    border-radius: 0 0 1.5rem 1.5rem;
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    box-sizing: border-box;
+}
+
+/* شبكة الأيقونات */
+.icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    gap: 0.5rem;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 0.5rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 0.75rem;
+    border: 1px solid var(--bg-text);
+    box-sizing: border-box;
+}
+
+.icon-option {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--bg-text);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--bg-text);
+    background: transparent;
+    box-sizing: border-box;
+}
+
+.icon-option:hover {
+    background: var(--bg-text);
+    color: var(--bg);
+}
+
+.icon-option.selected {
+    background: var(--bg-text);
+    color: var(--bg);
+}
+
+/* أزرار المودال */
+.grid-btn {
+    padding: 0.8rem 1.5rem;
+    border: 2px solid var(--bg-text);
+    background: transparent;
+    color: var(--bg-text);
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    min-width: 120px;
+    justify-content: center;
+    box-sizing: border-box;
+    flex: 1;
+}
+
+.grid-btn:hover {
+    background: var(--bg-text);
+    color: var(--bg);
+    transform: translateY(-2px);
+}
+
+.grid-btn.save {
+    background: var(--bg-text);
+    color: var(--bg);
+}
+
+.grid-btn.save:hover {
+    opacity: 0.9;
+}
+
+.grid-btn.danger {
+    background: transparent;
+    border-color: #e74c3c;
+    color: #e74c3c;
+}
+
+.grid-btn.danger:hover {
+    background: #e74c3c;
+    color: white;
+}
+
+.grid-btn.success {
+    background: transparent;
+    border-color: #2ecc71;
+    color: #2ecc71;
+}
+
+.grid-btn.success:hover {
+    background: #2ecc71;
+    color: white;
+}
+
+/* ==================== تحسينات المودال ==================== */
+/* حالة زر واحد فقط */
+.form-actions:has(.grid-btn:only-child) {
+    justify-content: center;
+}
+
+.form-actions:has(.grid-btn:only-child) .grid-btn {
+    width: 100%;
+    max-width: 100%;
+    flex: none;
+}
+
+/* حالتين للأزرار */
+.form-actions:has(.grid-btn:nth-child(2):last-child) {
+    justify-content: space-between;
+}
+
+.form-actions:has(.grid-btn:nth-child(2):last-child) .grid-btn {
+    flex: 0 0 calc(50% - 0.5rem);
+    max-width: calc(50% - 0.5rem);
+}
+
+/* ثلاث أزرار أو أكثر */
+.form-actions:has(.grid-btn:nth-child(3):last-child) .grid-btn {
+    flex: 1;
+    min-width: calc(33.333% - 0.67rem);
+}
+
+/* أزرار الإجراءات */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--bg-text);
+    background: transparent;
+    color: var(--bg-text);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: var(--bg-text);
+    color: var(--bg);
+    transform: translateY(-2px);
+}
+
+/* تحسين ظهور/اختفاء المودال */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-backdrop .modal-content-new {
+    animation: modalFadeIn 0.5s ease-out;
+}
+/* ==================== تنسيقات خاصة بقسم الرسائل ==================== */
+.messages-filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 1rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.2);
+}
+
+.messages-filters select {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    border: 2px solid var(--bg-text);
+    background: rgba(var(--bg-text-rgb), 0.1);
+    color: var(--bg-text);
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23c0b49e' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left 1rem center;
+    background-size: 12px;
+    padding-right: 2.5rem;
+}
+
+.messages-filters select:focus {
+    outline: none;
+    border-color: var(--bg-text);
+    box-shadow: 0 0 0 3px rgba(var(--bg-text-rgb), 0.2);
+    background-color: rgba(var(--bg-text-rgb), 0.15);
+}
+
+.messages-filters select:hover {
+    border-color: var(--bg-text);
+    background-color: rgba(var(--bg-text-rgb), 0.15);
+}
+
+.messages-filters select option {
+    background: var(--bg);
+    color: var(--bg-text);
+    padding: 0.8rem;
+    font-size: 1rem;
+}
+
+/* ==================== تنسيقات مودال عرض الرسالة ==================== */
+.message-details-container {
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 0.5rem;
+}
+
+/* معلومات المرسل */
+.message-sender-info {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1rem;
+    background: rgba(var(--bg-text-rgb), 0.08);
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+}
+
+.sender-avatar {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border-radius: 50%;
+    font-size: 2rem;
+    color: var(--bg-text);
+    border: 2px solid rgba(var(--bg-text-rgb), 0.3);
+}
+
+.sender-details {
+    flex: 1;
+}
+
+.sender-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--bg-text);
+    margin: 0 0 0.5rem 0;
+}
+
+.sender-contact {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--bg-text);
+    opacity: 0.9;
+    font-size: 1rem;
+}
+
+.sender-contact i {
+    font-size: 1.1rem;
+}
+
+/* معلومات الرسالة */
+.message-meta-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.2rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 1rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.5rem;
+}
+
+.meta-item i {
+    font-size: 1.2rem;
+    color: var(--bg-text);
+    opacity: 0.8;
+    width: 30px;
+    text-align: center;
+}
+
+.meta-label {
+    font-weight: 600;
+    color: var(--bg-text);
+    opacity: 0.9;
+    min-width: 80px;
+}
+
+.meta-value {
+    color: var(--bg-text);
+    font-weight: 500;
+    flex: 1;
+}
+
+.message-status-badge {
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 100px;
+    justify-content: center;
+}
+
+/* محتوى الرسالة */
+.message-content-container {
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 1rem;
+    padding: 1.8rem;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+}
+
+.message-content-title {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid rgba(var(--bg-text-rgb), 0.2);
+}
+
+.message-content-title i {
+    font-size: 1.4rem;
+    color: var(--bg-text);
+}
+
+.message-content-title h4 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: var(--bg-text);
+    font-weight: 700;
+}
+
+.message-text-large {
+    background: rgba(var(--bg-text-rgb), 0.03);
+    padding: 1.5rem;
+    border-radius: 0.8rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    line-height: 1.8;
+    font-size: 1.1rem;
+    color: var(--bg-text);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* ==================== تحسينات أقسام الرسائل المنفصلة ==================== */
+.contact-section,
+.date-section,
+.status-section {
+    margin-top: 1rem !important;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15) !important;
+    background: rgba(var(--bg-text-rgb), 0.05) !important;
+    flex-direction: row !important;
+    text-align: center !important;
+    padding: 1rem !important;
+}
+
+.contact-section .sender-avatar,
+.date-section .sender-avatar,
+.status-section .sender-avatar {
+    margin: 0 auto !important;
+}
+    
+.contact-section .sender-details,
+.date-section .sender-details,
+.status-section .sender-details {
+    text-align: center !important;
+}
+    
+.contact-section .contact-value {
+    text-align: center !important;
+    direction: ltr !important;
+}
+
+.contact-value {
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    word-break: break-word;
+    word-wrap: break-word;
+    line-height: 1.4;
+    font-size: 0.95rem;
+    color: var(--bg-text);
+}
+
+.contact-section .contact-value {
+    direction: ltr;
+    text-align: right;
+}
+
+/* ==================== ستايل حقول الاختيار المتعدد ==================== */
+.multi-select-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.8rem;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 1rem;
+    background: transparent;
+    border-radius: 0.75rem;
+    border: 2px solid rgba(var(--bg-text-rgb), 0.2);
+    margin-top: 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var(--bg-text-rgb), 0.3) transparent;
+}
+
+/* عنصر الخيار */
+.select-option {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem;
+    background: rgba(var(--bg-text-rgb), 0.08);
+    border: 2px solid rgba(var(--bg-text-rgb), 0.3);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.select-option:hover {
+    background: rgba(var(--bg-text-rgb), 0.15);
+    border-color: var(--bg-text);
+    transform: translateY(-2px);
+}
+
+.select-option.selected {
+    background: rgba(var(--bg-text-rgb), 0.2);
+    border-color: var(--bg-text);
+    box-shadow: 0 4px 12px rgba(var(--bg-text-rgb), 0.1);
+}
+
+/* مربع الاختيار المخصص */
+.select-option input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--bg-text);
+    border-radius: 0.25rem;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.select-option input[type="checkbox"]:checked {
+    background: var(--bg-text);
+    border-color: var(--bg-text);
+}
+
+.select-option input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--bg);
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.select-option input[type="checkbox"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--bg-text-rgb), 0.2);
+}
+
+/* نص الخيار */
+.select-option .option-text {
+    color: var(--bg-text);
+    font-size: 0.95rem;
+    font-weight: 500;
+    flex: 1;
+}
+
+/* أيقونة اختيار إضافية */
+.select-option .option-checkmark {
+    color: var(--bg-text);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.select-option.selected .option-checkmark {
+    opacity: 1;
+}
+
+/* حالة العنصر المعطل */
+.select-option.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.select-option.disabled:hover {
+    background: rgba(var(--bg-text-rgb), 0.08);
+    border-color: rgba(var(--bg-text-rgb), 0.3);
+    transform: none;
+}
+
+/* نسخة مدمجة للشاشات الصغيرة */
+.multi-select-grid.compact {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.6rem;
+    padding: 0.8rem;
+}
+
+/* ==================== ستايلات قسم المحتوى الدراسي ==================== */
+.subjects-tabs-wrapper {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.subjects-tabs-scroll {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 0.5rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 1rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var(--bg-text-rgb), 0.3) transparent;
+}
+
+.subjects-tabs-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+
+.subjects-tabs-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.subjects-tabs-scroll::-webkit-scrollbar-thumb {
+    background: rgba(var(--bg-text-rgb), 0.3);
+    border-radius: 3px;
+}
+
+.subjects-tabs-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(var(--bg-text-rgb), 0.5);
+}
+
+.subject-tab-btn {
+    padding: 0.8rem 1.5rem;
+    border: 2px solid var(--bg-text);
+    background: transparent;
+    color: var(--bg-text);
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-shrink: 0;
+}
+
+.subject-tab-btn:hover {
+    background: rgba(var(--bg-text-rgb), 0.1);
+    transform: translateY(-2px);
+}
+
+.subject-tab-btn.active {
+    background: var(--bg-text);
+    color: var(--bg);
+    box-shadow: 0 4px 12px rgba(var(--bg-text-rgb), 0.2);
+}
+
+.subject-tab-btn i {
+    font-size: 1.1rem;
+}
+
+/* رسالة عدم اختيار مادة */
+.content-placeholder {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--bg-text);
+    opacity: 0.7;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 1rem;
+    border: 2px dashed rgba(var(--bg-text-rgb), 0.2);
+    margin-top: 2rem;
+}
+
+.content-placeholder i {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.content-placeholder h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.content-placeholder p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* تبويبات أنواع المحتوى */
+.content-type-tabs {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+    padding: 1rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 1rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+}
+
+.content-type-tab {
+    padding: 0.9rem 1.5rem;
+    border: 2px solid var(--bg-text);
+    background: transparent;
+    color: var(--bg-text);
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex: 1;
+    justify-content: center;
+}
+
+.content-type-tab:hover {
+    background: rgba(var(--bg-text-rgb), 0.1);
+    transform: translateY(-2px);
+}
+
+.content-type-tab.active {
+    background: var(--bg-text);
+    color: var(--bg);
+    box-shadow: 0 4px 12px rgba(var(--bg-text-rgb), 0.2);
+}
+
+.content-type-tab i {
+    font-size: 1.2rem;
+}
+
+/* زر إضافة المحتوى */
+.add-content-btn-wrapper {
+    margin: 2rem 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.add-content-btn {
+    padding: 0.9rem 2rem;
+    border: 2px solid var(--bg-text);
+    background: var(--bg-text);
+    color: var(--bg);
+    border-radius: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.add-content-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* لوحات المحتوى */
+.content-tabs-container {
+    margin-top: 1.5rem;
+}
+
+.content-tab-panel {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.content-tab-panel.active {
+    display: block;
+}
+
+.content-card-icon {
+    width: 70px;
+    height: 70px;
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.content-card:hover .content-card-icon {
+    background: rgba(var(--bg-text-rgb), 0.2);
+    transform: scale(1.1);
+}
+
+.content-card-icon i {
+    font-size: 2rem;
+    color: var(--bg-text);
+}
+
+.content-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--bg-text);
+    text-align: center;
+    margin-bottom: 0.2rem;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.content-card-size {
+    font-size: 0.9rem;
+    color: var(--bg-text);
+    opacity: 0.7;
+    text-align: center;
+}
+
+.content-card-actions {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: all 0.3s ease;
+}
+
+.content-card:hover .content-card-actions {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.content-card-actions button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 0.5rem;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.content-card-actions button:hover {
+    background: var(--bg-text);
+    transform: scale(1.1);
+}
+
+.content-card-actions .delete-btn:hover {
+    background: #e74c3c;
+}
+
+/* ✅ معاينة الصورة داخل الكروت */
+.image-preview-container {
+    width: 100%;
+    height: 120px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+}
+
+.image-preview-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.content-card:hover .image-preview-container img {
+    transform: scale(1.05);
+}
+
+/* ✅ تحسين الأيقونة داخل الكروت */
+.content-card i {
+    font-size: 2.5rem;
+    color: var(--bg-text);
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.content-card:hover i {
+    transform: scale(1.1);
+}
+
+.content-card h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--bg-text);
+    margin: 0.5rem 0;
+    line-height: 1.4;
+}
+
+/* حقل اختيار الملف */
+.file-upload-label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border: 2px dashed var(--bg-text);
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+    color: var(--bg-text);
+}
+
+.file-upload-label:hover {
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border-color: var(--bg-text);
+    transform: translateY(-2px);
+}
+
+.file-upload-label i {
+    font-size: 1.5rem;
+    opacity: 0.8;
+}
+
+.file-upload-label span {
+    flex: 1;
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+/* ✅ حقل رابط الملف في المودال */
+.file-link-container {
+    padding: 1rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 0.75rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.file-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--bg-text);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background: rgba(var(--bg-text-rgb), 0.1);
+    transition: all 0.3s ease;
+    word-break: break-all;
+}
+
+.file-link:hover {
+    background: rgba(var(--bg-text-rgb), 0.2);
+    text-decoration: underline;
+}
+
+.file-id {
+    margin-top: 0.8rem;
+    padding: 0.5rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--bg-text);
+    opacity: 0.8;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.file-id i {
+    font-size: 0.9rem;
+}
+
+/* ✅ معاينة الصورة داخل المودال */
+.image-preview-modal {
+    margin-top: 1rem;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    background: rgba(var(--bg-text-rgb), 0.05);
+    margin-top: 0.5rem;
+}
+
+.image-preview-modal .preview-image {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: contain;
+    display: block;
+    padding: 1rem;
+    background: rgba(var(--bg-text-rgb), 0.02);
+}
+
+.image-preview-modal .image-info {
+    padding: 1rem;
+    background: rgba(var(--bg-text-rgb), 0.08);
+    text-align: center;
+    color: var(--bg-text);
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(var(--bg-text-rgb), 0.15);
+}
+
+/* ✅ معاينة الصوت داخل المودال */
+.audio-preview-modal {
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    background: rgba(var(--bg-text-rgb), 0.05);
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+.audio-preview-modal .audio-player {
+    width: 100%;
+    margin-top: 1rem;
+    border-radius: 0.75rem;
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.2);
+}
+
+.audio-preview-modal .audio-info {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    color: var(--bg-text);
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* ✅ معاينة PDF داخل المودال */
+.pdf-preview-modal {
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    background: rgba(var(--bg-text-rgb), 0.05);
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+.pdf-preview-modal i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+/* ✅ زر تحميل الملف PDF */
+.pdf-action-btn {
+    padding: 0.9rem 2rem;
+    border: 2px solid var(--bg-text);
+    background: var(--bg-text);
+    color: var(--bg);
+    border-radius: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    width: 80%; 
+    max-width: 400px;
+    margin: 0 auto;
+    text-decoration: none;
+    border-bottom: none;
+}
+
+.pdf-action-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+/* ====================  تصميم كروت المحتوى مع هيدر للشارات ==================== */
+.content-card-new {
+    background: rgba(var(--bg-text-rgb), 0.08);
+    border: 2px solid rgba(var(--bg-text-rgb), 0.2);
+    border-radius: 0.75rem;
+    padding: 0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 220px;
+    min-height: 220px;
+}
+
+/* هيدر الكارت */
+.content-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0.8rem;
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border-bottom: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    min-height: 45px;
+    flex-shrink: 0;
+}
+
+/* الشارات في الهيدر */
+.content-card-badges {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* الشارة اليسرى (عدد المجموعات) */
+.content-badge-groups {
+    width: 26px;
+    height: 26px;
+    background: rgba(var(--bg-text-rgb), 0.9);
+    color: var(--bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+/* الشارة اليمنى (Cloudinary) */
+.content-badge-cloudinary {
+    width: 26px;
+    height: 26px;
+    background: rgba(var(--bg-text-rgb), 0.9);
+    color: var(--bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+}
+
+/* محتوى الكارت (وسط الكارت) */
+.content-card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0.8rem 0.5rem;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* معاينة الصورة */
+.content-card-body .image-preview-container {
+    width: 100%;
+    height: 100px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+}
+
+.content-card-body .image-preview-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* الأيقونات */
+.content-card-body i {
+    font-size: 2.2rem;
+    color: var(--bg-text);
+    margin-bottom: 0.8rem;
+}
+
+/* الاسم (في الأسفل) */
+.content-card-footer {
+    padding: 0.8rem;
+    text-align: center;
+    border-top: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    background: rgba(var(--bg-text-rgb), 0.05);
+    flex-shrink: 0;
+    min-height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content-card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--bg-text);
+    line-height: 1.3;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* حجم الملف */
+.content-card-size {
+    font-size: 0.8rem;
+    color: var(--bg-text);
+    opacity: 0.7;
+    margin-top: 0.2rem;
+}
+/* ==================== الشاشات الصغيرة (ماكس 480px) ==================== */
+@media (max-width: 480px) {
+    /* 🔧 إصلاح: جعل الكروت تظهر 2 في الصف */
+    #admin-result-container .attendance-lectures-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+        margin-top: 1rem;
+    }
+    
+    #admin-result-container .attendance-lecture-card {
+        margin-bottom: 0 !important; /* إزالة الهامش السفلي لأن الفجوة في الـgrid تكفي */
+        width: 100%;
+        min-height: 200px; /* ارتفاع مناسب للجوال */
+    }
+    
+    /* تحسين محتوى الكروت للعرض المزدوج */
+    #admin-result-container .attendance-lecture-header {
+        padding: 0.6rem;
+        flex: 1;
+    }
+    
+    #admin-result-container .attendance-lecture-title {
+        font-size: 0.9rem !important; /* تصغير النص ليناسب */
+        line-height: 1.3;
+    }
+    
+    #admin-result-container .attendance-lecture-meta {
+        gap: 0.4rem;
+        font-size: 0.7rem;
+        flex-wrap: wrap;
+    }
+    
+    #admin-result-container .attendance-lecture-stats {
+        padding: 0.5rem;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.4rem;
+        font-size: 0.75rem;
+    }
+    
+    #admin-result-container .attendance-stat-item {
+        padding: 0.3rem 0.4rem;
+    }
+    
+    #admin-result-container .attendance-stat-label {
+        font-size: 0.65rem;
+    }
+    
+    #admin-result-container .attendance-stat-value {
+        font-size: 0.8rem;
+    }
+    
+    #admin-result-container .attendance-lecture-actions {
+        padding: 0.5rem;
+    }
+    
+    #admin-result-container .attendance-action-btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* بقية الكود كما هو... */
+    /* لا تغير أي شيء آخر */
+}

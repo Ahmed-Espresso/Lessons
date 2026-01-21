@@ -1,0 +1,847 @@
+/* ==================================================
+   ملف CSS خاص فقط بقسم حضور وغياب الطلاب
+================================================== */
+
+/* ==================== إحصائيات الحضور ==================== */
+#admin-result-container .attendance-stats-overview {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* 2 في الصف للشاشات الصغيره */
+@media only screen and (max-width: 480px) {
+    #admin-result-container .attendance-stats-overview {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    #admin-result-container .attendance-stat-card {
+        padding: 0.8rem;
+        min-height: 90px;
+    }
+    
+    #admin-result-container .attendance-stat-icon {
+        font-size: 1.3rem;
+        margin-bottom: 0.3rem;
+    }
+    
+    #admin-result-container .attendance-stat-value {
+        font-size: 1.5rem;
+    }
+    
+    #admin-result-container .attendance-stat-label {
+        font-size: 0.7rem;
+    }
+}
+
+#admin-result-container .attendance-stat-card {
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.2);
+    border-radius: 0.8rem;
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100px;
+}
+
+#admin-result-container .attendance-stat-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.4rem;
+    color: var(--bg-text);
+}
+
+#admin-result-container .attendance-stat-value {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--bg-text);
+    line-height: 1;
+    margin-bottom: 0.2rem;
+}
+
+#admin-result-container .attendance-stat-label {
+    font-size: 0.8rem;
+    color: rgba(var(--bg-text-rgb), 0.8);
+    font-weight: 500;
+}
+/* ==================== فلاتر البحث المدمجة ==================== */
+#admin-result-container .attendance-filters-combo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    #admin-result-container .attendance-filters-combo {
+        grid-template-columns: 1fr;
+    }
+}
+
+#admin-result-container .combo-filters-wrapper {
+    display: flex;
+    width: 100%;
+    height: 46px;
+    border-radius: 0.6rem;
+    overflow: hidden;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.3);
+    background: rgba(var(--bg-text-rgb), 0.05);
+}
+
+#admin-result-container .combo-filter-select {
+    flex: 1;
+    padding: 0 0.8rem;
+    border: none;
+    background: transparent;
+    color: var(--bg-text);
+    font-size: 0.9rem;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23c0b49e' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left 0.7rem center;
+    background-size: 12px;
+    padding-left: 2.5rem;
+    outline: none;
+    height: 100%;
+    cursor: pointer;
+}
+
+#admin-result-container .combo-filter-select:focus {
+    background-color: rgba(var(--bg-text-rgb), 0.1);
+}
+
+#admin-result-container .combo-filter-right {
+    border-left: 1px solid rgba(var(--bg-text-rgb), 0.3);
+}
+
+#admin-result-container .combo-filter-left {
+    border-right: 1px solid rgba(var(--bg-text-rgb), 0.3);
+}
+
+#admin-result-container .combo-filters-wrapper .combo-filter-select {
+    flex: 0 0 50%;
+    max-width: 50%;
+}
+
+/* ==================== شبكة بطاقات المحاضرات ==================== */
+#admin-result-container .attendance-lectures-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+#admin-result-container .attendance-lecture-card {
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    border-radius: 0.8rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==================== إصلاح رأس الكارت (2 في الصف دائماً) ==================== */
+#admin-result-container .attendance-lecture-header {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+#admin-result-container .attendance-lecture-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--bg-text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#admin-result-container .attendance-lecture-title i {
+    font-size: 1.2rem;
+    color: rgba(var(--bg-text-rgb), 0.8);
+}
+
+#admin-result-container .attendance-lecture-meta {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+    font-size: 0.8rem;
+    color: rgba(var(--bg-text-rgb), 0.7);
+}
+
+#admin-result-container .attendance-lecture-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.4rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#admin-result-container .attendance-lecture-meta i {
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+/* ==================== إحصائيات البطاقة ==================== */
+#admin-result-container .attendance-lecture-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    padding: 0.8rem;
+    background: rgba(var(--bg-text-rgb), 0.08);
+    border-bottom: 1px solid rgba(var(--bg-text-rgb), 0.1);
+}
+
+#admin-result-container .attendance-stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4rem 0.6rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 0.4rem;
+}
+
+#admin-result-container .attendance-stat-label {
+    font-size: 0.8rem;
+    color: rgba(var(--bg-text-rgb), 0.8);
+}
+
+#admin-result-container .attendance-stat-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--bg-text);
+}
+
+#admin-result-container .attendance-stat-value.present {
+    color: #2ecc71;
+}
+
+#admin-result-container .attendance-stat-value.absent {
+    color: #e74c3c;
+}
+
+#admin-result-container .attendance-stat-value.late {
+    color: #f39c12;
+}
+
+#admin-result-container .attendance-stat-value.excused {
+    color: #3498db;
+}
+
+/* ==================== زر تسجيل الحضور - معدل ليطابق الستايل ==================== */
+#admin-result-container .attendance-lecture-actions {
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    background: rgba(var(--bg-text-rgb), 0.03);
+}
+
+#admin-result-container .attendance-action-btn {
+    padding: 0.6rem 1.2rem;
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.3);
+    color: var(--bg-text);
+    border-radius: 0.6rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+    width: 100%;
+    justify-content: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#admin-result-container .attendance-action-btn:hover {
+    background: rgba(var(--bg-text-rgb), 0.2);
+    border-color: var(--bg-text);
+}
+
+/* ==================== تحسينات خاصة للجوال ==================== */
+@media only screen and (max-width: 480px) {
+    #admin-result-container .attendance-lectures-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+        margin-top: 1rem;
+    }
+    
+    #admin-result-container .attendance-lecture-header {
+        padding: 0.6rem;
+        gap: 0.5rem;
+    }
+    
+    #admin-result-container .attendance-lecture-title {
+        font-size: 0.9rem;
+    }
+    
+    #admin-result-container .attendance-lecture-meta {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.4rem;
+        font-size: 0.7rem;
+    }
+    
+    #admin-result-container .attendance-lecture-meta span {
+        padding: 0.2rem 0.4rem;
+    }
+    
+    #admin-result-container .attendance-lecture-stats {
+        padding: 0.5rem;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.4rem;
+    }
+    
+    #admin-result-container .attendance-stat-item {
+        padding: 0.3rem 0.4rem;
+    }
+    
+    #admin-result-container .attendance-stat-label {
+        font-size: 0.65rem;
+    }
+    
+    #admin-result-container .attendance-stat-value {
+        font-size: 0.8rem;
+    }
+    
+    #admin-result-container .attendance-lecture-actions {
+        padding: 0.5rem;
+    }
+    
+    #admin-result-container .attendance-action-btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+        gap: 0.3rem;
+    }
+    
+    #admin-result-container .attendance-action-btn span {
+        font-size: 0.75rem;
+    }
+    
+    #admin-result-container .combo-filters-wrapper {
+        height: 40px;
+    }
+    
+    #admin-result-container .combo-filter-select {
+        font-size: 0.8rem;
+        padding-left: 2rem;
+        background-size: 10px;
+        background-position: left 0.5rem center;
+    }
+}
+
+/* ==================== مودال تسجيل الحضور ==================== */
+#userModalRoot .attendance-modal {
+    max-width: 95%;
+    width: 95%;
+    max-height: 90vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.8rem;
+    overflow: hidden;
+}
+
+#userModalRoot .modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0;
+    display: block;
+    min-height: 0;
+    background: rgba(var(--bg-text-rgb), 0.02);
+}
+
+/* معلومات المحاضرة في المودال - تصميم جديد بصورة عرض أفقي */
+#userModalRoot .attendance-lecture-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-bottom: 1px solid rgba(var(--bg-text-rgb), 0.1);
+}
+
+#userModalRoot .attendance-lecture-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border-radius: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+#userModalRoot .attendance-lecture-icon i {
+    font-size: 1.8rem;
+    color: var(--bg-text);
+}
+
+#userModalRoot .attendance-lecture-details {
+    flex: 1;
+    min-width: 0;
+}
+
+#userModalRoot .attendance-lecture-details h3 {
+    font-size: 1.3rem;
+    color: var(--bg-text);
+    margin: 0 0 0.8rem 0;
+    font-weight: 600;
+}
+
+/* تصميم جديد: 4 عناصر في سطر واحد (شبكة 4 أعمدة) */
+#userModalRoot .attendance-lecture-meta-details {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.8rem;
+    font-size: 0.85rem;
+    color: rgba(var(--bg-text-rgb), 0.8);
+}
+
+#userModalRoot .attendance-lecture-meta-details span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    padding: 0.5rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 0.4rem;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#userModalRoot .attendance-lecture-meta-details i {
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+/* ==================== إحصائيات سريعة في المودال (أزرار تسجيل الكل) ==================== */
+#userModalRoot .attendance-stats-summary {
+    padding: 1rem;
+    background: rgba(var(--bg-text-rgb), 0.03);
+    border-bottom: 1px solid rgba(var(--bg-text-rgb), 0.1);
+}
+
+#userModalRoot .stats-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+}
+
+#userModalRoot .stat-btn {
+    padding: 0.6rem;
+    background: rgba(var(--bg-text-rgb), 0.08);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.2);
+    color: var(--bg-text);
+    border-radius: 0.5rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+#userModalRoot .stat-btn:hover {
+    background: rgba(var(--bg-text-rgb), 0.15);
+    border-color: var(--bg-text);
+}
+
+/* حاوية المجموعات والطلاب */
+#userModalRoot .attendance-groups-container {
+    padding: 1rem;
+}
+
+#userModalRoot .attendance-group-section {
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    border-radius: 0.6rem;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+#userModalRoot .group-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.8rem;
+    background: rgba(var(--bg-text-rgb), 0.08);
+    border-bottom: 1px solid rgba(var(--bg-text-rgb), 0.1);
+}
+
+#userModalRoot .group-header h4 {
+    font-size: 1rem;
+    color: var(--bg-text);
+    margin: 0;
+    font-weight: 600;
+    flex: 1;
+}
+
+#userModalRoot .student-count {
+    background: rgba(var(--bg-text-rgb), 0.15);
+    color: var(--bg-text);
+    padding: 0.2rem 0.6rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+#userModalRoot .group-students {
+    padding: 0.5rem;
+}
+
+/* عناصر الطلاب */
+#userModalRoot .attendance-student-item {
+    padding: 0.6rem;
+    background: rgba(var(--bg-text-rgb), 0.03);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.08);
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+#userModalRoot .student-info {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex: 1;
+    min-width: 0;
+}
+
+#userModalRoot .student-avatar {
+    width: 36px;
+    height: 36px;
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.2);
+    flex-shrink: 0;
+}
+
+#userModalRoot .student-avatar i {
+    font-size: 1.2rem;
+    color: rgba(var(--bg-text-rgb), 0.8);
+}
+
+#userModalRoot .student-details {
+    flex: 1;
+    min-width: 0;
+}
+
+#userModalRoot .student-name {
+    font-size: 0.95rem;
+    color: var(--bg-text);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#userModalRoot .student-email {
+    font-size: 0.8rem;
+    color: rgba(var(--bg-text-rgb), 0.7);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* حالة الطالب - معدل: الشارة على اليسار والسيلكت على اليمين */
+#userModalRoot .student-status-combo {
+    display: flex;
+    align-items: stretch;
+    height: 40px;
+    border-radius: 0.4rem;
+    overflow: hidden;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.3);
+    background: rgba(var(--bg-text-rgb), 0.05);
+    width: 100%;
+    flex-shrink: 0;
+}
+
+#userModalRoot .status-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.8rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-align: center;
+    width: 50%;
+    border-right: 1px solid rgba(var(--bg-text-rgb), 0.3);
+    white-space: nowrap;
+    background: rgba(var(--bg-text-rgb), 0.1);
+    flex: 0 0 50%;
+    border-radius: 0.4rem 0 0 0.4rem;
+}
+
+#userModalRoot .status-select.combo-select-right {
+    flex: 0 0 50%;
+    padding: 0 2rem 0 0.8rem;
+    border: none;
+    background: transparent;
+    color: var(--bg-text);
+    font-size: 0.85rem;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23c0b49e' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left 0.6rem center;
+    background-size: 12px;
+    outline: none;
+    cursor: pointer;
+    height: 100%;
+    border-radius: 0 0.4rem 0.4rem 0;
+}
+
+/* ألوان الحالات */
+#userModalRoot .status-badge.present {
+    background: rgba(46, 204, 113, 0.2);
+    color: #2ecc71;
+    border-color: rgba(46, 204, 113, 0.3);
+}
+
+#userModalRoot .status-badge.absent {
+    background: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+    border-color: rgba(231, 76, 60, 0.3);
+}
+
+#userModalRoot .status-badge.late {
+    background: rgba(243, 156, 18, 0.2);
+    color: #f39c12;
+    border-color: rgba(243, 156, 18, 0.3);
+}
+
+#userModalRoot .status-badge.excused {
+    background: rgba(52, 152, 219, 0.2);
+    color: #3498db;
+    border-color: rgba(52, 152, 219, 0.3);
+}
+
+/* ملاحظات */
+#userModalRoot .attendance-notes-section {
+    padding: 1rem;
+    border-top: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    background: rgba(var(--bg-text-rgb), 0.05);
+}
+
+#userModalRoot .attendance-notes-section label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--bg-text);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+#userModalRoot .attendance-notes-section textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.3);
+    background: rgba(var(--bg-text-rgb), 0.05);
+    color: var(--bg-text);
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    resize: vertical;
+    min-height: 80px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+/* ==================== ستايل رسالة "لا يوجد طلاب" ==================== */
+#userModalRoot .no-students {
+    padding: 3rem 1.5rem;
+    text-align: center;
+    color: var(--bg-text);
+    opacity: 0.7;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 1rem;
+    border: 2px dashed rgba(var(--bg-text-rgb), 0.2);
+    margin: 1rem 0;
+}
+
+#userModalRoot .no-students i {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    display: block;
+    color: rgba(var(--bg-text-rgb), 0.5);
+}
+
+#userModalRoot .no-students span {
+    font-size: 1.2rem;
+    display: block;
+    font-weight: 500;
+}
+
+/* ==================== تنسيق أزرار المودال - معدل ==================== */
+#userModalRoot .modal-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1rem;
+    border-top: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    background: rgba(var(--bg-text-rgb), 0.05);
+}
+
+#userModalRoot .modal-btn {
+    padding: 0.7rem 1.5rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.3);
+    background: rgba(var(--bg-text-rgb), 0.1);
+    color: var(--bg-text);
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+    width: 100%;
+    justify-content: center;
+}
+
+#userModalRoot .modal-btn.save {
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border-color: rgba(var(--bg-text-rgb), 0.3);
+    color: var(--bg-text);
+}
+
+#userModalRoot .modal-btn.save:hover {
+    background: rgba(var(--bg-text-rgb), 0.2);
+    border-color: var(--bg-text);
+}
+
+/* تحسينات للجوال */
+@media only screen and (max-width: 768px) {
+    #userModalRoot .attendance-lecture-meta-details {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.6rem;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    #userModalRoot .attendance-modal {
+        max-width: 98%;
+        width: 98%;
+        max-height: 95vh;
+        border-radius: 0.6rem;
+    }
+    
+    #userModalRoot .attendance-lecture-info {
+        flex-direction: column;
+        text-align: center;
+        padding: 0.8rem;
+        gap: 0.8rem;
+    }
+    
+    #userModalRoot .attendance-lecture-icon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    #userModalRoot .attendance-lecture-icon i {
+        font-size: 1.5rem;
+    }
+    
+    #userModalRoot .attendance-lecture-details h3 {
+        font-size: 1.1rem;
+    }
+    
+    #userModalRoot .attendance-lecture-meta-details {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    #userModalRoot .attendance-student-item {
+        padding: 0.5rem;
+        gap: 0.6rem;
+    }
+    
+    #userModalRoot .student-avatar {
+        width: 32px;
+        height: 32px;
+    }
+    
+    #userModalRoot .student-avatar i {
+        font-size: 1rem;
+    }
+    
+    #userModalRoot .student-name {
+        font-size: 0.85rem;
+    }
+    
+    #userModalRoot .student-email {
+        font-size: 0.7rem;
+    }
+    
+    #userModalRoot .student-status-combo {
+        height: 35px;
+    }
+    
+    #userModalRoot .status-badge {
+        padding: 0 0.5rem;
+        font-size: 0.7rem;
+    }
+    
+    #userModalRoot .status-select.combo-select-right {
+        padding: 0 1.8rem 0 0.6rem;
+        font-size: 0.8rem;
+        background-size: 10px;
+        background-position: left 0.4rem center;
+    }
+    
+    #userModalRoot .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.4rem;
+    }
+    
+    #userModalRoot .stat-btn {
+        padding: 0.5rem;
+        font-size: 0.75rem;
+        gap: 0.3rem;
+    }
+    
+    #userModalRoot .no-students {
+        padding: 2rem 1rem;
+    }
+    
+    #userModalRoot .no-students i {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    #userModalRoot .no-students span {
+        font-size: 1rem;
+    }
+}
+/* ==================== أيقونة المجموعة ==================== */
+#userModalRoot .group-header i {
+    color: var(--bg-text);
+}
