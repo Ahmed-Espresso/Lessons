@@ -1,0 +1,7550 @@
+/* تحسينات للعرض */
+:root {
+    --bg-text-rgb: 255, 255, 255; 
+    --chat-bg: rgba(var(--bg-text-rgb), 0.03);
+    --chat-border: rgba(var(--bg-text-rgb), 0.15);
+    --chat-input-bg: rgba(var(--bg-text-rgb), 0.08);
+    --chat-message-bg: rgba(var(--bg-text-rgb), 0.1);
+    --chat-message-current-bg: rgba(var(--bg-text-rgb), 0.2);
+    --chat-accent: var(--bg-text);
+    --chat-voice: #2ecc71;
+    --chat-file: #3498db;
+    --chat-image: #9b59b6;
+    --chat-danger: #e74c3c;
+}
+
+/* ضبط قيمة RGB حسب الثيم */
+.theme-night { --bg-text-rgb: 255, 158, 100; }
+.theme-apple { --bg-text-rgb: 192, 180, 158; }
+.theme-wine { --bg-text-rgb: 192, 180, 158; }
+.theme-coffee { --bg-text-rgb: 255, 243, 204; }
+.theme-space { --bg-text-rgb: 0, 191, 255; }
+.theme-water { --bg-text-rgb: 255, 255, 255; }
+.theme-wild { --bg-text-rgb: 255, 215, 0; }
+
+/* ==================== النماذج العامة ==================== */
+/* هذه الأنماط لقسم رسالة الترحيب ومن نحن والأقسام الأخرى التي تستخدم admin-form */
+.admin-form {
+    padding: 1rem 0;
+}
+
+.admin-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.admin-form label {
+    display: block;
+    color: var(--bg-text);
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.admin-form input,
+.admin-form select,
+.admin-form textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--bg-text);
+    background: transparent;
+    color: var(--bg-text);
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.admin-form input:focus,
+.admin-form select:focus,
+.admin-form textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--bg-text-rgb), 0.1);
+    border-color: var(--bg-text);
+}
+
+.admin-form textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.admin-form .form-buttons {
+    margin-top: 2rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.admin-form .btn {
+    padding: 0.9rem 2rem;
+    border: 2px solid var(--bg-text);
+    background: var(--bg-text);
+    color: var(--bg);
+    border-radius: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    width: 80%; 
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.admin-form .btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+/* الفلاتر */
+.filters {
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filters select {
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--bg-text);
+    background: rgba(0,0,0,0.4);
+    color: var(--bg-text);
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    min-width: 200px;
+}
+
+.back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: transparent;
+    border: 2px solid var(--bg-text);
+    color: var(--bg-text);
+    border-radius: 0.75rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.back-btn:hover {
+    background: var(--bg-text);
+    color: var(--bg);
+}
+
+/* ==================== المودالات ==================== */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    padding: 15px;
+    overflow: hidden;
+}
+
+.modal-content-new {
+    background: var(--bg-card);
+    border-radius: 1.5rem;
+    border: 2px solid var(--bg-text);
+    max-width: 90%;
+    max-height: 90vh;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    height: auto;
+}
+
+.modal-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 2px solid var(--bg-text);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    background: var(--bg-card);
+    z-index: 1;
+    border-radius: 1.5rem 1.5rem 0 0;
+    flex-shrink: 0;
+    min-height: 70px;
+    box-sizing: border-box;
+}
+
+.modal-header h2 {
+    color: var(--bg-text);
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.modal-close-unified {
+    background: transparent;
+    border: none;
+    color: var(--bg-text);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.modal-close-unified:hover {
+    transform: rotate(90deg);
+}
+
+/* النموذج داخل المودال */
+.form-compact-new {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2rem;
+    min-height: 200px;
+    box-sizing: border-box;
+    position: relative;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var(--bg-text-rgb), 0.3) transparent;
+}
+
+.form-compact-new::-webkit-scrollbar {
+    width: 6px;
+}
+
+.form-compact-new::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.form-compact-new::-webkit-scrollbar-thumb {
+    background: rgba(var(--bg-text-rgb), 0.3);
+    border-radius: 3px;
+}
+
+.form-compact-new::-webkit-scrollbar-thumb:hover {
+    background: rgba(var(--bg-text-rgb), 0.5);
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.form-row .half {
+    flex: 1;
+    min-width: 200px;
+}
+
+.form-row .full {
+    flex: 2;
+    min-width: 100%;
+}
+
+.form-compact-new label {
+    display: block;
+    color: var(--bg-text);
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.form-compact-new input,
+.form-compact-new select,
+.form-compact-new textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid var(--bg-text);
+    background: transparent;
+    color: var(--bg-text);
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-compact-new input:focus,
+.form-compact-new select:focus,
+.form-compact-new textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--bg-text-rgb), 0.1);
+    border-color: var(--bg-text);
+}
+
+/* منطقة الأزرار */
+.form-actions {
+    padding: 1.5rem 2rem;
+    border-top: 2px solid var(--bg-text);
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    background: var(--bg-card);
+    flex-shrink: 0;
+    border-radius: 0 0 1.5rem 1.5rem;
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    box-sizing: border-box;
+}
+
+/* شبكة الأيقونات */
+.icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    gap: 0.5rem;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 0.5rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 0.75rem;
+    border: 1px solid var(--bg-text);
+    box-sizing: border-box;
+}
+
+.icon-option {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--bg-text);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--bg-text);
+    background: transparent;
+    box-sizing: border-box;
+}
+
+.icon-option:hover {
+    background: var(--bg-text);
+    color: var(--bg);
+}
+
+.icon-option.selected {
+    background: var(--bg-text);
+    color: var(--bg);
+}
+
+/* أزرار المودال */
+.grid-btn {
+    padding: 0.8rem 1.5rem;
+    border: 2px solid var(--bg-text);
+    background: transparent;
+    color: var(--bg-text);
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    min-width: 120px;
+    justify-content: center;
+    box-sizing: border-box;
+    flex: 1;
+}
+
+.grid-btn:hover {
+    background: var(--bg-text);
+    color: var(--bg);
+    transform: translateY(-2px);
+}
+
+.grid-btn.save {
+    background: var(--bg-text);
+    color: var(--bg);
+}
+
+.grid-btn.save:hover {
+    opacity: 0.9;
+}
+
+.grid-btn.danger {
+    background: transparent;
+    border-color: #e74c3c;
+    color: #e74c3c;
+}
+
+.grid-btn.danger:hover {
+    background: #e74c3c;
+    color: white;
+}
+
+.grid-btn.success {
+    background: transparent;
+    border-color: #2ecc71;
+    color: #2ecc71;
+}
+
+.grid-btn.success:hover {
+    background: #2ecc71;
+    color: white;
+}
+
+/* ==================== تحسينات المودال ==================== */
+/* حالة زر واحد فقط */
+.form-actions:has(.grid-btn:only-child) {
+    justify-content: center;
+}
+
+.form-actions:has(.grid-btn:only-child) .grid-btn {
+    width: 100%;
+    max-width: 100%;
+    flex: none;
+}
+
+/* حالتين للأزرار */
+.form-actions:has(.grid-btn:nth-child(2):last-child) {
+    justify-content: space-between;
+}
+
+.form-actions:has(.grid-btn:nth-child(2):last-child) .grid-btn {
+    flex: 0 0 calc(50% - 0.5rem);
+    max-width: calc(50% - 0.5rem);
+}
+
+/* ثلاث أزرار أو أكثر */
+.form-actions:has(.grid-btn:nth-child(3):last-child) .grid-btn {
+    flex: 1;
+    min-width: calc(33.333% - 0.67rem);
+}
+
+/* أزرار الإجراءات */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--bg-text);
+    background: transparent;
+    color: var(--bg-text);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: var(--bg-text);
+    color: var(--bg);
+    transform: translateY(-2px);
+}
+/* ==================== معاينة الصور في مودال المحتوى ==================== */
+/* معاينة الصور في مودال الإضافة */
+#file-preview img {
+    max-width: 100%;
+    max-height: 250px;
+    width: auto;
+    height: auto;
+    border-radius: 0.75rem;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+    border: 2px solid rgba(var(--bg-text-rgb), 0.2);
+    background: rgba(var(--bg-text-rgb), 0.05);
+    padding: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#file-preview img:hover {
+    border-color: var(--bg-text);
+    box-shadow: 0 6px 18px rgba(var(--bg-text-rgb), 0.15);
+}
+
+/* حاوية المعلومات تحت الصورة في مودال الإضافة */
+#file-preview div {
+    text-align: center;
+    margin-top: 15px;
+    color: var(--bg-text);
+    font-size: 0.9rem;
+    padding: 12px;
+    background: rgba(var(--bg-text-rgb), 0.08);
+    border-radius: 0.75rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+#file-preview div:hover {
+    background: rgba(var(--bg-text-rgb), 0.12);
+    border-color: var(--bg-text);
+}
+
+#file-preview div i {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+/* معاينة الصور في مودال التعديل (View/Edit) */
+.preview-section img,
+.preview-section .preview-image,
+.image-preview-modal img {
+    max-width: 100%;
+    max-height: 300px;
+    width: auto;
+    height: auto;
+    border-radius: 0.75rem;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 15px auto;
+    border: 2px solid rgba(var(--bg-text-rgb), 0.25);
+    background: rgba(var(--bg-text-rgb), 0.05);
+    padding: 15px;
+    box-shadow: 0 4px 16px rgba(var(--bg-text-rgb), 0.1);
+    transition: all 0.3s ease;
+}
+
+.preview-section img:hover,
+.preview-section .preview-image:hover,
+.image-preview-modal img:hover {
+    border-color: var(--bg-text);
+    box-shadow: 0 6px 20px rgba(var(--bg-text-rgb), 0.2);
+    transform: translateY(-2px);
+}
+
+/* معلومات الصورة في مودال التعديل */
+.image-info,
+.audio-info,
+.image-info-modal {
+    text-align: center;
+    color: var(--bg-text);
+    font-size: 0.9rem;
+    padding: 12px 16px;
+    background: rgba(var(--bg-text-rgb), 0.08);
+    border-radius: 0.75rem;
+    margin-top: 10px;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.image-info:hover,
+.audio-info:hover,
+.image-info-modal:hover {
+    background: rgba(var(--bg-text-rgb), 0.12);
+    border-color: var(--bg-text);
+}
+
+.image-info i,
+.audio-info i,
+.image-info-modal i {
+    font-size: 1rem;
+    opacity: 0.8;
+    margin-right: 0.5rem;
+}
+
+/* تحسينات إضافية للمعاينات */
+.preview-section,
+.image-preview-modal,
+.audio-preview-modal,
+.pdf-preview-modal {
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 1rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    padding: 1.5rem;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+}
+
+.preview-section:hover,
+.image-preview-modal:hover,
+.audio-preview-modal:hover,
+.pdf-preview-modal:hover {
+    background: rgba(var(--bg-text-rgb), 0.08);
+    border-color: var(--bg-text);
+}
+
+/* عنوان القسم */
+.preview-section h4,
+.image-preview-modal h4,
+.audio-preview-modal h4,
+.pdf-preview-modal h4 {
+    color: var(--bg-text);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(var(--bg-text-rgb), 0.2);
+}
+
+.preview-section h4 i,
+.image-preview-modal h4 i,
+.audio-preview-modal h4 i,
+.pdf-preview-modal h4 i {
+    font-size: 1.2rem;
+}
+
+/* ==================== تنسيقات خاصة بقسم الرسائل ==================== */
+.messages-filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+    padding: 0rem;
+    background: transparent;
+}
+
+.messages-filters select {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.2);
+    background: rgba(var(--bg-text-rgb), 0.1);
+    color: var(--bg-text);
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23c0b49e' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left 1rem center;
+    background-size: 12px;
+    padding-right: 2.5rem;
+}
+
+.messages-filters select:focus {
+    outline: none;
+    border-color: var(--bg-text);
+    box-shadow: 0 0 0 3px rgba(var(--bg-text-rgb), 0.2);
+    background-color: rgba(var(--bg-text-rgb), 0.15);
+}
+
+.messages-filters select:hover {
+    border-color: var(--bg-text);
+    background-color: rgba(var(--bg-text-rgb), 0.15);
+}
+
+.messages-filters select option {
+    background: var(--bg);
+    color: var(--bg-text);
+    padding: 0.8rem;
+    font-size: 1rem;
+}
+
+/* ==================== تنسيقات مودال عرض الرسالة ==================== */
+.message-details-container {
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 0.5rem;
+}
+
+/* معلومات المرسل */
+.message-sender-info {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1rem;
+    background: rgba(var(--bg-text-rgb), 0.08);
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+}
+
+.sender-avatar {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border-radius: 50%;
+    font-size: 2rem;
+    color: var(--bg-text);
+    border: 2px solid rgba(var(--bg-text-rgb), 0.3);
+}
+
+.sender-details {
+    flex: 1;
+}
+
+.sender-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--bg-text);
+    margin: 0 0 0.5rem 0;
+}
+
+.sender-contact {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--bg-text);
+    opacity: 0.9;
+    font-size: 1rem;
+}
+
+.sender-contact i {
+    font-size: 1.1rem;
+}
+
+/* معلومات الرسالة */
+.message-meta-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.2rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 1rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.5rem;
+}
+
+.meta-item i {
+    font-size: 1.2rem;
+    color: var(--bg-text);
+    opacity: 0.8;
+    width: 30px;
+    text-align: center;
+}
+
+.meta-label {
+    font-weight: 600;
+    color: var(--bg-text);
+    opacity: 0.9;
+    min-width: 80px;
+}
+
+.meta-value {
+    color: var(--bg-text);
+    font-weight: 500;
+    flex: 1;
+}
+
+.message-status-badge {
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 100px;
+    justify-content: center;
+}
+
+/* محتوى الرسالة */
+.message-content-container {
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 1rem;
+    padding: 1.8rem;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+}
+
+.message-content-title {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid rgba(var(--bg-text-rgb), 0.2);
+}
+
+.message-content-title i {
+    font-size: 1.4rem;
+    color: var(--bg-text);
+}
+
+.message-content-title h4 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: var(--bg-text);
+    font-weight: 700;
+}
+
+.message-text-large {
+    background: rgba(var(--bg-text-rgb), 0.03);
+    padding: 1.5rem;
+    border-radius: 0.8rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    line-height: 1.8;
+    font-size: 1.1rem;
+    color: var(--bg-text);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* ==================== تحسينات أقسام الرسائل المنفصلة ==================== */
+.contact-section,
+.date-section,
+.status-section {
+    margin-top: 1rem !important;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15) !important;
+    background: rgba(var(--bg-text-rgb), 0.05) !important;
+    flex-direction: row !important;
+    text-align: center !important;
+    padding: 1rem !important;
+}
+
+.contact-section .sender-avatar,
+.date-section .sender-avatar,
+.status-section .sender-avatar {
+    margin: 0 auto !important;
+}
+    
+.contact-section .sender-details,
+.date-section .sender-details,
+.status-section .sender-details {
+    text-align: center !important;
+}
+    
+.contact-section .contact-value {
+    text-align: center !important;
+    direction: ltr !important;
+}
+
+.contact-value {
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    word-break: break-word;
+    word-wrap: break-word;
+    line-height: 1.4;
+    font-size: 0.95rem;
+    color: var(--bg-text);
+}
+
+.contact-section .contact-value {
+    direction: ltr;
+    text-align: right;
+}
+
+/* ==================== ستايل حقول الاختيار المتعدد ==================== */
+.multi-select-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.8rem;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 1rem;
+    background: transparent;
+    border-radius: 0.75rem;
+    border: 2px solid rgba(var(--bg-text-rgb), 0.2);
+    margin-top: 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var(--bg-text-rgb), 0.3) transparent;
+}
+
+/* عنصر الخيار */
+.select-option {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem;
+    background: rgba(var(--bg-text-rgb), 0.08);
+    border: 2px solid rgba(var(--bg-text-rgb), 0.3);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.select-option:hover {
+    background: rgba(var(--bg-text-rgb), 0.15);
+    border-color: var(--bg-text);
+    transform: translateY(-2px);
+}
+
+.select-option.selected {
+    background: rgba(var(--bg-text-rgb), 0.2);
+    border-color: var(--bg-text);
+    box-shadow: 0 4px 12px rgba(var(--bg-text-rgb), 0.1);
+}
+
+/* مربع الاختيار المخصص */
+.select-option input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--bg-text);
+    border-radius: 0.25rem;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.select-option input[type="checkbox"]:checked {
+    background: var(--bg-text);
+    border-color: var(--bg-text);
+}
+
+.select-option input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--bg);
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.select-option input[type="checkbox"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--bg-text-rgb), 0.2);
+}
+
+/* نص الخيار */
+.select-option .option-text {
+    color: var(--bg-text);
+    font-size: 0.95rem;
+    font-weight: 500;
+    flex: 1;
+}
+
+/* أيقونة اختيار إضافية */
+.select-option .option-checkmark {
+    color: var(--bg-text);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.select-option.selected .option-checkmark {
+    opacity: 1;
+}
+
+/* حالة العنصر المعطل */
+.select-option.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.select-option.disabled:hover {
+    background: rgba(var(--bg-text-rgb), 0.08);
+    border-color: rgba(var(--bg-text-rgb), 0.3);
+    transform: none;
+}
+
+/* نسخة مدمجة للشاشات الصغيرة */
+.multi-select-grid.compact {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.6rem;
+    padding: 0.8rem;
+}
+
+/* ==================== ستايلات قسم المحتوى الدراسي ==================== */
+.subjects-tabs-wrapper {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.subjects-tabs-scroll {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 0.5rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 1rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var(--bg-text-rgb), 0.3) transparent;
+}
+
+.subjects-tabs-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+
+.subjects-tabs-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.subjects-tabs-scroll::-webkit-scrollbar-thumb {
+    background: rgba(var(--bg-text-rgb), 0.3);
+    border-radius: 3px;
+}
+
+.subjects-tabs-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(var(--bg-text-rgb), 0.5);
+}
+
+.subject-tab-btn {
+    padding: 0.8rem 1.5rem;
+    border: 2px solid var(--bg-text);
+    background: transparent;
+    color: var(--bg-text);
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-shrink: 0;
+}
+
+.subject-tab-btn:hover {
+    background: rgba(var(--bg-text-rgb), 0.1);
+    transform: translateY(-2px);
+}
+
+.subject-tab-btn.active {
+    background: var(--bg-text);
+    color: var(--bg);
+    box-shadow: 0 4px 12px rgba(var(--bg-text-rgb), 0.2);
+}
+
+.subject-tab-btn i {
+    font-size: 1.1rem;
+}
+
+/* رسالة عدم اختيار مادة */
+.content-placeholder {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--bg-text);
+    opacity: 0.7;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 1rem;
+    border: 2px dashed rgba(var(--bg-text-rgb), 0.2);
+    margin-top: 2rem;
+}
+
+.content-placeholder i {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.content-placeholder h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.content-placeholder p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* تبويبات أنواع المحتوى */
+.content-type-tabs {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+    padding: 1rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 1rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+}
+
+.content-type-tab {
+    padding: 0.9rem 1.5rem;
+    border: 2px solid var(--bg-text);
+    background: transparent;
+    color: var(--bg-text);
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex: 1;
+    justify-content: center;
+}
+
+.content-type-tab:hover {
+    background: rgba(var(--bg-text-rgb), 0.1);
+    transform: translateY(-2px);
+}
+
+.content-type-tab.active {
+    background: var(--bg-text);
+    color: var(--bg);
+    box-shadow: 0 4px 12px rgba(var(--bg-text-rgb), 0.2);
+}
+
+.content-type-tab i {
+    font-size: 1.2rem;
+}
+
+/* زر إضافة المحتوى */
+.add-content-btn-wrapper {
+    margin: 2rem 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.add-content-btn {
+    padding: 0.9rem 2rem;
+    border: 2px solid var(--bg-text);
+    background: var(--bg-text);
+    color: var(--bg);
+    border-radius: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.add-content-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* لوحات المحتوى */
+.content-tabs-container {
+    margin-top: 1.5rem;
+}
+
+.content-tab-panel {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.content-tab-panel.active {
+    display: block;
+}
+
+.content-card-icon {
+    width: 70px;
+    height: 70px;
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.content-card:hover .content-card-icon {
+    background: rgba(var(--bg-text-rgb), 0.2);
+    transform: scale(1.1);
+}
+
+.content-card-icon i {
+    font-size: 2rem;
+    color: var(--bg-text);
+}
+
+.content-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--bg-text);
+    text-align: center;
+    margin-bottom: 0.2rem;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.content-card-size {
+    font-size: 0.9rem;
+    color: var(--bg-text);
+    opacity: 0.7;
+    text-align: center;
+}
+
+.content-card-actions {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: all 0.3s ease;
+}
+
+.content-card:hover .content-card-actions {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.content-card-actions button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 0.5rem;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.content-card-actions button:hover {
+    background: var(--bg-text);
+    transform: scale(1.1);
+}
+
+.content-card-actions .delete-btn:hover {
+    background: #e74c3c;
+}
+
+/* ✅ معاينة الصورة داخل الكروت */
+.image-preview-container {
+    width: 100%;
+    height: 120px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+}
+
+.image-preview-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.content-card:hover .image-preview-container img {
+    transform: scale(1.05);
+}
+
+/* ✅ تحسين الأيقونة داخل الكروت */
+.content-card i {
+    font-size: 2.5rem;
+    color: var(--bg-text);
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.content-card:hover i {
+    transform: scale(1.1);
+}
+
+.content-card h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--bg-text);
+    margin: 0.5rem 0;
+    line-height: 1.4;
+}
+
+/* حقل اختيار الملف */
+.file-upload-label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border: 2px dashed var(--bg-text);
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+    color: var(--bg-text);
+}
+
+.file-upload-label:hover {
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border-color: var(--bg-text);
+    transform: translateY(-2px);
+}
+
+.file-upload-label i {
+    font-size: 1.5rem;
+    opacity: 0.8;
+}
+
+.file-upload-label span {
+    flex: 1;
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+/* ✅ حقل رابط الملف في المودال */
+.file-link-container {
+    padding: 1rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 0.75rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.file-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--bg-text);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background: rgba(var(--bg-text-rgb), 0.1);
+    transition: all 0.3s ease;
+    word-break: break-all;
+}
+
+.file-link:hover {
+    background: rgba(var(--bg-text-rgb), 0.2);
+    text-decoration: underline;
+}
+
+.file-id {
+    margin-top: 0.8rem;
+    padding: 0.5rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--bg-text);
+    opacity: 0.8;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.file-id i {
+    font-size: 0.9rem;
+}
+
+/* ✅ معاينة الصورة داخل المودال */
+.image-preview-modal {
+    margin-top: 1rem;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    background: rgba(var(--bg-text-rgb), 0.05);
+    margin-top: 0.5rem;
+}
+
+.image-preview-modal .preview-image {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: contain;
+    display: block;
+    padding: 1rem;
+    background: rgba(var(--bg-text-rgb), 0.02);
+}
+
+.image-preview-modal .image-info {
+    padding: 1rem;
+    background: rgba(var(--bg-text-rgb), 0.08);
+    text-align: center;
+    color: var(--bg-text);
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(var(--bg-text-rgb), 0.15);
+}
+
+/* ✅ معاينة الصوت داخل المودال */
+.audio-preview-modal {
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    background: rgba(var(--bg-text-rgb), 0.05);
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+.audio-preview-modal .audio-player {
+    width: 100%;
+    margin-top: 1rem;
+    border-radius: 0.75rem;
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.2);
+}
+
+.audio-preview-modal .audio-info {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    color: var(--bg-text);
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* ✅ معاينة PDF داخل المودال */
+.pdf-preview-modal {
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    background: rgba(var(--bg-text-rgb), 0.05);
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+.pdf-preview-modal i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+/* ✅ زر تحميل الملف PDF */
+.pdf-action-btn {
+    padding: 0.9rem 2rem;
+    border: 2px solid var(--bg-text);
+    background: var(--bg-text);
+    color: var(--bg);
+    border-radius: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    width: 80%; 
+    max-width: 400px;
+    margin: 0 auto;
+    text-decoration: none;
+    border-bottom: none;
+}
+
+.pdf-action-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+/* ====================  تصميم كروت المحتوى مع هيدر للشارات ==================== */
+.content-card-new {
+    background: rgba(var(--bg-text-rgb), 0.08);
+    border: 2px solid rgba(var(--bg-text-rgb), 0.2);
+    border-radius: 0.75rem;
+    padding: 0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 220px;
+    min-height: 220px;
+}
+
+/* هيدر الكارت */
+.content-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0.8rem;
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border-bottom: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    min-height: 45px;
+    flex-shrink: 0;
+}
+
+/* الشارات في الهيدر */
+.content-card-badges {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* الشارة اليسرى (عدد المجموعات) */
+.content-badge-groups {
+    width: 26px;
+    height: 26px;
+    background: rgba(var(--bg-text-rgb), 0.9);
+    color: var(--bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+/* الشارة اليمنى (Cloudinary) */
+.content-badge-cloudinary {
+    width: 26px;
+    height: 26px;
+    background: rgba(var(--bg-text-rgb), 0.9);
+    color: var(--bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+}
+
+/* محتوى الكارت (وسط الكارت) */
+.content-card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0.8rem 0.5rem;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* معاينة الصورة */
+.content-card-body .image-preview-container {
+    width: 100%;
+    height: 100px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+}
+
+.content-card-body .image-preview-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* الأيقونات */
+.content-card-body i {
+    font-size: 2.2rem;
+    color: var(--bg-text);
+    margin-bottom: 0.8rem;
+}
+
+/* الاسم (في الأسفل) */
+.content-card-footer {
+    padding: 0.8rem;
+    text-align: center;
+    border-top: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    background: rgba(var(--bg-text-rgb), 0.05);
+    flex-shrink: 0;
+    min-height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content-card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--bg-text);
+    line-height: 1.3;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* حجم الملف */
+.content-card-size {
+    font-size: 0.8rem;
+    color: var(--bg-text);
+    opacity: 0.7;
+    margin-top: 0.2rem;
+}
+
+/* ==================== ستايلات حقل كلمة المرور مع زر العين ==================== */
+.password-field-wrapper {
+    margin-bottom: 1.5rem;
+}
+
+.password-input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-input-group input {
+    width: 100%;
+    background: transparent;
+    cursor: text;
+    border: 2px solid var(--bg-text);
+    background: rgba(var(--bg-text-rgb), 0.05);
+    color: var(--bg-text);
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    padding: 0.8rem 1rem;
+    padding-right: 50px !important;
+    transition: all 0.3s ease;
+}
+
+.password-input-group input:read-only {
+    background: rgba(var(--bg-text-rgb), 0.05);
+    color: var(--bg-text);
+    opacity: 0.8;
+    border-color: rgba(var(--bg-text-rgb), 0.3);
+}
+
+.toggle-password-btn {
+    position: absolute;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: var(--bg-text);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-password-btn:hover {
+    background: rgba(var(--bg-text-rgb), 0.1);
+}
+
+.toggle-password-btn:active {
+    transform: scale(0.95);
+}
+
+.password-hint {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.85rem;
+    color: var(--bg-text);
+    opacity: 0.7;
+    line-height: 1.4;
+}
+
+.password-hint i {
+    margin-right: 5px;
+    color: #3498db;
+}
+
+/* ==================== ستايلات حقل تعيين الطالب ==================== */
+.student-assignment-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.student-select {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--bg-text);
+    background: rgba(var(--bg-text-rgb), 0.1);
+    color: var(--bg-text);
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23c0b49e' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left 1rem center;
+    background-size: 12px;
+    padding-right: 2.5rem;
+}
+
+.student-select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--bg-text-rgb), 0.1);
+    border-color: var(--bg-text);
+}
+
+.student-selection-info {
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border: 2px solid var(--bg-text);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    animation: fadeIn 0.3s ease;
+}
+
+.selected-student-preview {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.selected-student-preview i {
+    font-size: 2rem;
+    color: var(--bg-text);
+}
+
+.selected-student-preview div {
+    flex: 1;
+}
+
+.selected-student-preview strong {
+    display: block;
+    color: var(--bg-text);
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+}
+
+.selected-student-preview small {
+    color: var(--bg-text);
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+.clear-student-btn {
+    background: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+    border: 2px solid #e74c3c;
+    border-radius: 0.75rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.clear-student-btn:hover {
+    background: #e74c3c;
+    color: white;
+}
+
+.field-description {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.85rem;
+    color: var(--bg-text);
+    opacity: 0.7;
+}
+/* ==================== قسم الشات المتقدم  ==================== */
+/* الشات يأخذ كل المساحة المتاحة */
+.advanced-chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100% !important;
+    max-height: 100% !important;
+    min-height: 500px;
+    background: var(--chat-bg);
+    border: 2px solid var(--chat-border);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    direction: rtl;
+    flex: 1;
+}
+
+/* ==================== شريط التحكم ==================== */
+.chat-controls-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 1rem;
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border-bottom: 2px solid var(--chat-border);
+    flex-shrink: 0;
+    min-height: 50px;
+    gap: 0.5rem;
+}
+
+.chat-stats {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--bg-text);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.3rem 0.5rem;
+    background: rgba(var(--bg-text-rgb), 0.08);
+    border-radius: 0.5rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    white-space: nowrap;
+}
+
+/* زر التحديث */
+#refresh-chat-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--bg-text-rgb), 0.08);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    color: var(--chat-accent);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+#refresh-chat-btn:hover {
+    background: rgba(var(--bg-text-rgb), 0.2);
+    transform: scale(1.05);
+}
+
+/* زر مسح المحادثة */
+#clear-chat-btn {
+    padding: 0.4rem 0.8rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    background: rgba(var(--bg-text-rgb), 0.08);
+    color: var(--bg-text);
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+#clear-chat-btn:hover {
+    background: rgba(var(--bg-text-rgb), 0.2);
+    transform: translateY(-1px);
+}
+
+/* ==================== منطقة الرسائل ==================== */
+.chat-messages-advanced {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    background: rgba(var(--bg-text-rgb), 0.02);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var(--bg-text-rgb), 0.3) transparent;
+    min-height: 200px;
+}
+
+.chat-messages-advanced::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-messages-advanced::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chat-messages-advanced::-webkit-scrollbar-thumb {
+    background: rgba(var(--bg-text-rgb), 0.3);
+    border-radius: 3px;
+}
+
+.chat-messages-advanced::-webkit-scrollbar-thumb:hover {
+    background: rgba(var(--bg-text-rgb), 0.5);
+}
+
+/* حالة التحميل */
+.chat-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    color: var(--bg-text);
+    opacity: 0.7;
+    height: 100%;
+}
+
+.chat-loading .spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid rgba(var(--bg-text-rgb), 0.1);
+    border-top-color: var(--chat-accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+.chat-loading p {
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* حالة عدم وجود رسائل */
+.no-messages {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--bg-text);
+    opacity: 0.5;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-messages i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.no-messages h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.no-messages p {
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* خط التاريخ */
+.message-date-divider {
+    text-align: center;
+    margin: 1rem 0;
+    position: relative;
+}
+
+.message-date-divider span {
+    background: rgba(var(--bg-text-rgb), 0.1);
+    color: var(--bg-text);
+    padding: 0.3rem 1rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.2);
+    display: inline-block;
+}
+
+/* ==================== تعديلات هيكل الرسالة ==================== */
+.message-advanced {
+    margin-bottom: 0.8rem;
+    animation: fadeIn 0.3s ease;
+}
+
+.message-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+    max-width: 95%;
+    width: 100%;
+}
+
+.message-advanced.current-user .message-inner {
+    align-items: flex-end;
+}
+
+/* ==================== تعديل الهيدر - الوقت بنفس سطر الأيقونة ==================== */
+.message-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.2rem;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.message-advanced.current-user .message-header {
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+}
+
+.message-advanced.other-user .message-header {
+    justify-content: flex-start;
+}
+
+.message-avatar {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    border-radius: 50%;
+    background: rgba(var(--bg-text-rgb), 0.15);
+    border: 2px solid;
+    border-color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: var(--bg-text);
+    flex-shrink: 0;
+}
+
+.sender-info {
+    display: contents;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.sender-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--bg-text);
+    opacity: 0.9;
+    line-height: 1;
+}
+
+/* الوقت في نفس سطر الأيقونة والاسم */
+.message-time-header {
+    font-size: 0.7rem;
+    color: var(--bg-text);
+    opacity: 0.5;
+    font-weight: 400;
+    white-space: nowrap;
+    margin-left: 0.5rem;
+}
+
+.message-advanced.current-user .message-time-header {
+    margin-left: 0;
+    margin-right: 0.5rem;
+}
+
+/* محتوى الرسالة */
+.message-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    width: 100%;
+}
+
+/* الرسالة النصية */
+.message-text {
+    background: var(--chat-message-bg);
+    padding: 0.6rem 0.8rem;
+    border-radius: 0.8rem;
+    color: var(--bg-text);
+    line-height: 1.4;
+    font-size: 0.9rem;
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: pre-wrap;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    display: inline-block;
+    max-width: 100%;
+}
+
+.message-advanced.current-user .message-text {
+    background: var(--chat-message-current-bg);
+    border-color: rgba(var(--bg-text-rgb), 0.2);
+}
+
+/* الرسالة الصورية */
+.image-message-container {
+    display: inline-block;
+    max-width: 180px;
+    margin-top: 0.3rem;
+}
+
+.image-message {
+    position: relative;
+    border-radius: 0.8rem;
+    overflow: hidden;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    background: rgba(var(--bg-text-rgb), 0.05);
+}
+
+.chat-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-height: 150px;
+    object-fit: cover;
+}
+
+.view-image-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.8rem;
+    text-decoration: none;
+}
+
+.view-image-btn:hover {
+    background: rgba(0,0,0,0.8);
+    transform: scale(1.1);
+}
+
+/* الرسالة الصوتية */
+.voice-message-container {
+    margin-top: 0.3rem;
+    max-width: 250px;
+}
+
+.voice-message {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: rgba(var(--chat-voice), 0.1);
+    padding: 0.6rem 0.8rem;
+    border-radius: 0.8rem;
+    border: 1px solid rgba(var(--chat-voice), 0.2);
+}
+
+.play-voice-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--chat-voice);
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
+.play-voice-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(var(--chat-voice), 0.3);
+}
+
+.voice-waveform {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    flex: 1;
+    height: 24px;
+}
+
+.voice-waveform .wave {
+    width: 3px;
+    background: var(--chat-voice);
+    border-radius: 1.5px;
+    animation: wave 1.4s ease-in-out infinite;
+}
+
+.voice-waveform .wave:nth-child(2) { animation-delay: 0.2s; height: 60%; }
+.voice-waveform .wave:nth-child(3) { animation-delay: 0.4s; height: 80%; }
+.voice-waveform .wave:nth-child(4) { animation-delay: 0.6s; height: 60%; }
+.voice-waveform .wave:nth-child(5) { animation-delay: 0.8s; height: 40%; }
+
+.voice-duration {
+    font-size: 0.75rem;
+    color: var(--chat-voice);
+    opacity: 0.9;
+    font-weight: 600;
+    min-width: 45px;
+    text-align: left;
+}
+
+/* الرسالة الملفية */
+.file-message-container {
+    margin-top: 0.3rem;
+    max-width: 280px;
+}
+
+.file-message {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: rgba(var(--chat-file), 0.1);
+    padding: 0.6rem 0.8rem;
+    border-radius: 0.8rem;
+    border: 1px solid rgba(var(--chat-file), 0.2);
+}
+
+.file-message.audio-file {
+    background: rgba(var(--chat-voice), 0.1);
+    border-color: rgba(var(--chat-voice), 0.2);
+}
+
+.file-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 0.5rem;
+    background: rgba(var(--bg-text-rgb), 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: var(--chat-file);
+    flex-shrink: 0;
+}
+
+.file-message.audio-file .file-icon {
+    color: var(--chat-voice);
+}
+
+.file-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.file-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--bg-text);
+    margin-bottom: 0.2rem;
+    word-break: break-word;
+}
+
+.file-details {
+    display: flex;
+    gap: 0.8rem;
+    font-size: 0.75rem;
+    color: var(--bg-text);
+    opacity: 0.7;
+}
+
+.play-audio-btn,
+.download-file-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--chat-file);
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.8rem;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.file-message.audio-file .play-audio-btn {
+    background: var(--chat-voice);
+}
+
+.play-audio-btn:hover,
+.download-file-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(var(--chat-file), 0.3);
+}
+
+.file-message.audio-file .play-audio-btn:hover {
+    box-shadow: 0 4px 8px rgba(var(--chat-voice), 0.3);
+}
+
+/* ==================== ستايل زر الحذف عند المسح ==================== */
+.message-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.3rem;
+    margin-top: 0.3rem;
+    opacity: 0;
+    transform: translateY(3px);
+    transition: all 0.3s ease;
+}
+
+.message-advanced:hover .message-actions {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.delete-message-btn {
+    padding: 0.3rem 0.8rem;
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.2);
+    color: var(--bg-text);
+    border-radius: 0.4rem;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    font-weight: 500;
+}
+
+.delete-message-btn:hover {
+    background: rgba(var(--bg-text-rgb), 0.2);
+    transform: translateY(-1px) scale(1.05);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+.delete-message-btn:active {
+    transform: translateY(0) scale(1);
+}
+
+/* ==================== منطقة الإدخال ==================== */
+.chat-input-advanced {
+    padding: 0.8rem 1rem;
+    background: var(--chat-input-bg);
+    border-top: 2px solid var(--chat-border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex-shrink: 0;
+    min-height: 100px;
+}
+
+/* ==================== معاينة الملف ==================== */
+.file-preview-container {
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border-radius: 0.8rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.2);
+    overflow: hidden;
+    max-height: 200px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var(--bg-text-rgb), 0.3) transparent;
+}
+
+.file-preview-container::-webkit-scrollbar {
+    width: 5px;
+}
+
+.file-preview-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.file-preview-container::-webkit-scrollbar-thumb {
+    background: rgba(var(--bg-text-rgb), 0.2);
+    border-radius: 2.5px;
+}
+
+.file-preview-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(var(--bg-text-rgb), 0.3);
+}
+
+.file-preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0.8rem;
+    background: rgba(var(--bg-text-rgb), 0.15);
+    border-bottom: 1px solid rgba(var(--bg-text-rgb), 0.2);
+}
+
+#file-preview-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--bg-text);
+}
+
+.remove-file-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(var(--chat-danger), 0.1);
+    border: 1px solid rgba(var(--chat-danger), 0.3);
+    color: var(--chat-danger);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.8rem;
+}
+
+.remove-file-btn:hover {
+    background: rgba(var(--chat-danger), 0.2);
+    transform: scale(1.1);
+}
+
+.file-preview-body {
+    padding: 0.8rem;
+}
+
+/* معاينة الصورة */
+.image-preview {
+    text-align: center;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 120px;
+    border-radius: 0.6rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.2);
+    margin-bottom: 0.8rem;
+}
+
+/* معاينة الملف العادي */
+.file-preview {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.file-preview.audio-preview {
+    padding: 0.8rem;
+    background: rgba(var(--chat-voice), 0.05);
+    border-radius: 0.6rem;
+    border: 1px solid rgba(var(--chat-voice), 0.15);
+}
+
+.file-icon-preview {
+    width: 40px;
+    height: 40px;
+    border-radius: 0.5rem;
+    background: rgba(var(--bg-text-rgb), 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--bg-text);
+    flex-shrink: 0;
+}
+
+.file-info-preview {
+    flex: 1;
+    min-width: 0;
+}
+
+.file-name-preview {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--bg-text);
+    margin-bottom: 0.2rem;
+    word-break: break-word;
+}
+
+.file-details-preview {
+    display: flex;
+    gap: 0.8rem;
+    font-size: 0.8rem;
+    color: var(--bg-text);
+    opacity: 0.7;
+    flex-wrap: wrap;
+}
+
+.preview-audio-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--chat-voice);
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.preview-audio-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(var(--chat-voice), 0.3);
+}
+
+/* ==================== مؤشر التسجيل ==================== */
+.recording-container {
+    background: rgba(var(--chat-voice), 0.1);
+    border: 2px solid rgba(var(--chat-voice), 0.3);
+    border-radius: 0.8rem;
+    padding: 0.8rem;
+    animation: pulseBorder 2s infinite;
+    margin-top: 0.3rem;
+}
+
+.recording-status {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+}
+
+.recording-pulse {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--chat-voice);
+    animation: pulse 1.5s infinite;
+}
+
+.recording-text {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--chat-voice);
+    flex: 1;
+}
+
+.recording-timer {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--chat-voice);
+    font-family: 'Courier New', monospace;
+}
+
+/* ==================== أزرار التسجيل بتصميم خاص ==================== */
+.recording-actions {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+}
+
+.recording-action-btn {
+    padding: 0.6rem 1.2rem;
+    border: 2px solid;
+    border-radius: 0.6rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-width: 80px;
+    justify-content: center;
+}
+
+.recording-action-btn.success {
+    background: var(--bg-text);
+    color: var(--bg);
+    border-color: var(--bg-text);
+}
+
+.recording-action-btn.success:hover {
+    background: transparent;
+    color: var(--bg-text);
+    transform: translateY(-2px);
+}
+
+.recording-action-btn.danger {
+    background: transparent;
+    color: var(--bg-text);
+    border-color: rgba(var(--bg-text-rgb), 0.3);
+}
+
+.recording-action-btn.danger:hover {
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border-color: var(--bg-text);
+}
+
+/* ==================== حاوية الإدخال - تصحيح البلاسهولدر ==================== */
+.message-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 46px;
+    height: 46px;
+}
+
+.advanced-chat-input {
+    flex: 1;
+    padding-right: 7rem !important;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    border: 2px solid rgba(var(--bg-text-rgb), 0.2);
+    background: rgba(var(--bg-text-rgb), 0.08);
+    color: var(--bg-text);
+    border-radius: 0.8rem;
+    font-size: 0.9rem;
+    font-family: 'Tajawal', sans-serif;
+    resize: none;
+    min-height: 46px;
+    max-height: 100px;
+    transition: all 0.3s ease;
+    line-height: 1.4;
+    direction: rtl;
+    box-sizing: border-box;
+    height: 46px;
+    margin: 0;
+    overflow: hidden;
+}
+
+.advanced-chat-input:focus {
+    outline: none;
+    border-color: var(--chat-accent);
+    box-shadow: 0 0 0 3px rgba(var(--bg-text-rgb), 0.1);
+    background: rgba(var(--bg-text-rgb), 0.12);
+}
+
+.advanced-chat-input::placeholder {
+    color: var(--bg-text);
+    opacity: 0.6;
+    padding-right: 0.3rem;
+}
+
+/* ==================== الأيقونات داخل حقل الإدخال - في المنتصف عمودياً ==================== */
+.input-tools {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+}
+
+/* الأيقونات على اليمين (للاتجاه العربي) */
+.input-tools.right {
+    right: 0.6rem;
+}
+
+/* الأيقونات على اليسار */
+.input-tools.left {
+    left: 0.6rem;
+}
+
+.tool-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(var(--bg-text-rgb), 0.15);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.25);
+    color: var(--bg-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    margin: 0;
+    padding: 0;
+}
+
+.tool-btn:hover {
+    background: rgba(var(--bg-text-rgb), 0.25);
+    transform: scale(1.1);
+}
+
+.tool-btn.voice-btn {
+    background: rgba(var(--chat-voice), 0.1);
+    border-color: rgba(var(--chat-voice), 0.3);
+    color: var(--chat-voice);
+}
+
+.tool-btn.voice-btn:hover {
+    background: rgba(var(--chat-voice), 0.2);
+}
+
+/* زر الإرسال داخل الحقل على اليسار */
+.send-message-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--chat-accent);
+    color: var(--bg);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.send-message-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(var(--bg-text-rgb), 0.3);
+}
+
+/* تحديث هيكل الرسائل لمطابقة الطالب */
+.message-advanced {
+    margin-bottom: 1rem;
+    animation: fadeIn 0.3s ease;
+    display: flex;
+    width: 100%;
+}
+
+.message-advanced.current-user {
+    justify-content: flex-start;
+}
+
+.message-advanced.other-user {
+    justify-content: flex-end;
+}
+
+/* تحديث الحاوية الداخلية */
+.message-advanced .message-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+    max-width: 80%;
+    width: fit-content;
+}
+
+.message-advanced.current-user .message-inner {
+    align-items: flex-start;
+    margin-right: auto;
+}
+
+.message-advanced.other-user .message-inner {
+    align-items: flex-end;
+    margin-left: auto;
+}
+
+/* تحديث هيكل الهيدر */
+.message-advanced .message-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.2rem;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.message-advanced.current-user .message-header {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+}
+
+.message-advanced.other-user .message-header {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+/* إعادة ترتيب العناصر في الهيدر */
+.message-advanced.current-user .message-avatar {
+    order: 1;
+}
+
+.message-advanced.other-user .message-avatar {
+    order: 3;
+}
+
+.message-advanced.current-user .sender-name {
+    order: 3;
+}
+
+.message-advanced.other-user .sender-name {
+    order: 2;
+}
+
+.message-advanced.current-user .message-time-header {
+    order: 2;
+    margin-left: 0.5rem;
+    margin-right: 0;
+}
+
+.message-advanced.other-user .message-time-header {
+    order: 1;
+    margin-right: 0.5rem;
+    margin-left: 0;
+}
+
+/* تحديث نص الرسالة ليطابق تصميم الطالب */
+.message-advanced .message-text {
+    position: relative;
+    background: var(--chat-message-bg);
+    padding: 0.8rem 1rem;
+    border-radius: 1rem;
+    color: var(--bg-text);
+    line-height: 1.5;
+    font-size: 0.95rem;
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: pre-wrap;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    max-width: 100%;
+    min-width: 100px;
+}
+
+.message-advanced.current-user .message-text {
+    background: var(--chat-message-current-bg);
+    border-color: rgba(var(--bg-text-rgb), 0.2);
+    border-bottom-left-radius: 0.3rem;
+}
+
+.message-advanced.other-user .message-text {
+    border-bottom-right-radius: 0.3rem;
+}
+
+/* ========== الاختبارات ========== */
+/* ========== 1. شبكة بطاقات الاختبارات - إجبار 2 في الصف ========== */
+#exams-table-body.data-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+    gap: 1.5rem !important;
+    margin-top: 1.5rem !important;
+}
+
+/* ========== 2. تصميم البطاقات الأساسي ========== */
+.exam-card {
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.2);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-height: 180px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.exam-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    border-color: var(--bg-text);
+    background: rgba(var(--bg-text-rgb), 0.05);
+}
+
+.exam-card i {
+    font-size: 2.5rem;
+    color: var(--bg-text);
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.exam-card:hover i {
+    transform: scale(1.1);
+    color: var(--bg-text);
+}
+
+.exam-card h4 {
+    color: var(--bg-text);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0.5rem 0;
+    line-height: 1.3;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.exam-card .question-count,
+.exam-card .total-points {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.exam-card small.exam-status {
+    margin-top: 0.5rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ========== 5. حالة عدم وجود اختبارات ========== */
+.no-exams-message {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--bg-text);
+    opacity: 0.7;
+}
+
+.no-exams-message i {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.5;
+}
+
+.no-exams-message h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.no-exams-message p {
+    font-size: 1rem;
+    max-width: 400px;
+    margin: 0 auto;
+    line-height: 1.5;
+}
+
+/* ==================== 6. أنماط جديدة لقسم إدارة الأسئلة ==================== */
+/* ========== 7.  حاوية أزرار الأسئلة والتثبيت ========== */
+.exam-questions-buttons-container {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+/*  الأزرار لتكون بجانب بعضها */
+.exam-questions-buttons-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0.8rem !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* ========== 8. أزرار إضافة الأسئلة ========== */
+.exam-question-btn-small {
+    padding: 0.8rem 0.5rem !important;
+    border: 2px solid var(--bg-text) !important;
+    background: transparent !important;
+    color: var(--bg-text) !important;
+    border-radius: 0.75rem !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    transition: all 0.3s ease !important;
+    text-align: center !important;
+    min-height: 60px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.exam-question-btn-small:hover {
+    background: var(--bg-text) !important;
+    color: var(--bg) !important;
+    transform: translateY(-2px) !important;
+}
+
+.exam-question-btn-small i {
+    font-size: 1.2rem !important;
+}
+
+.exam-question-btn-small:active {
+    transform: translateY(0) !important;
+}
+
+/* ========== 9. تثبيت أزرار الأسئلة تحت الهيدر مباشرة ========== */
+#questions-buttons-grid {
+    position: sticky !important;
+    top: -1.2rem !important; /* يثبت أعلى الحاوية مباشرة */
+    z-index: 1000 !important;
+    background: var(--bg-card) !important;
+    padding: 1rem 0 0.5rem 0 !important; /* مسافة علوية أقل */
+    margin: 0 0 1rem 0 !important;
+    margin-top: -3rem !important;
+    border-bottom: 1px solid rgba(var(--bg-text-rgb), 0.1) !important;
+}
+
+/* ========== 10. تصميم بطاقات الأسئلة ========== */
+.question-item {
+    background: transparent;
+    border: 2px solid rgba(var(--bg-text-rgb), 0.15); /* لون أفتح */
+    border-radius: 1rem;
+    padding: 0.5rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.question-item:hover {
+    border-color: var(--bg-text);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* ========== 11. رأس السؤال ========== */
+.question-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid rgba(var(--bg-text-rgb), 0.1); /* لون أفتح */
+}
+
+.question-header-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(var(--bg-text-rgb), 0.08); /* لون أفتح */
+    padding: 0.3rem 0.8rem;
+    border-radius: 1rem;
+}
+
+.question-number {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: var(--bg-text);
+}
+
+.question-type-icon {
+    font-size: 1.2rem;
+    color: var(--bg-text);
+}
+
+.question-header h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--bg-text);
+    font-weight: 600;
+    flex: 1;
+}
+
+/* ========== 12. زر حذف السؤال ========== */
+.delete-question {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    background: transparent;
+    border: 2px solid var(--bg-text);
+    color: var(--bg-text);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.delete-question:hover {
+    opacity: 1;
+    background: var(--bg-text);
+    color: var(--bg);
+}
+
+/* ========== 13. حاوية الخيارات ========== */
+.options-container {
+    margin-top: 1rem;
+}
+
+.option-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+    padding: 0.8rem;
+    background: transparent;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15); /* لون أفتح */
+    transition: all 0.3s ease;
+}
+
+.option-row:hover {
+    border-color: var(--bg-text);
+}
+
+/* ========== 14. تنسيق زر الاختيار ========== */
+.option-label {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    cursor: pointer;
+    min-width: 120px;
+    flex-shrink: 0;
+}
+
+.option-label input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--bg-text);
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.option-label input[type="radio"]:checked {
+    background: var(--bg-text);
+    border-color: var(--bg-text);
+}
+
+.option-label input[type="radio"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background: var(--bg);
+    border-radius: 50%;
+}
+
+.option-label input[type="radio"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--bg-text-rgb), 0.2);
+}
+
+.option-label span {
+    color: var(--bg-text);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+/* ========== 15. حقل نص الخيار ========== */
+.option-text {
+    flex: 1;
+    padding: 0.8rem;
+    border: 2px solid rgba(var(--bg-text-rgb), 0.15); /* لون أفتح */
+    background: transparent;
+    color: var(--bg-text);
+    border-radius: 0.6rem;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.option-text:focus {
+    outline: none;
+    border-color: var(--bg-text);
+    box-shadow: 0 0 0 3px rgba(var(--bg-text-rgb), 0.1);
+}
+
+/* ========== 16. حاوية الفراغات ========== */
+.blanks-container {
+    margin-top: 1rem;
+}
+
+.blank-row {
+    margin-bottom: 0.8rem;
+}
+
+.blank-row label {
+    display: block;
+    color: var(--bg-text);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.blank-answer {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid rgba(var(--bg-text-rgb), 0.15); /* لون أفتح */
+    background: transparent;
+    color: var(--bg-text);
+    border-radius: 0.6rem;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.blank-answer:focus {
+    outline: none;
+    border-color: var(--bg-text);
+    box-shadow: 0 0 0 3px rgba(var(--bg-text-rgb), 0.1);
+}
+
+/* ========== 17. تحسينات النماذج داخل الأسئلة ========== */
+.question-item .form-group {
+    margin-bottom: 1rem;
+}
+
+.question-item .form-group label {
+    display: block;
+    color: var(--bg-text);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.question-item textarea.question-text {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid rgba(var(--bg-text-rgb), 0.15); /* لون أفتح */
+    background: transparent;
+    color: var(--bg-text);
+    border-radius: 0.6rem;
+    font-size: 0.95rem;
+    resize: vertical;
+    min-height: 80px;
+    transition: all 0.3s ease;
+}
+
+.question-item textarea.question-text:focus {
+    outline: none;
+    border-color: var(--bg-text);
+    box-shadow: 0 0 0 3px rgba(var(--bg-text-rgb), 0.1);
+}
+
+.question-item .question-points,
+.question-item .options-count,
+.question-item .correct-answer,
+.question-item .blanks-count {
+    width: 100%;
+    padding: 0.7rem;
+    border: 2px solid rgba(var(--bg-text-rgb), 0.15); /* لون أفتح */
+    background: transparent;
+    color: var(--bg-text);
+    border-radius: 0.6rem;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.question-item select:focus,
+.question-item input:focus {
+    outline: none;
+    border-color: var(--bg-text);
+    box-shadow: 0 0 0 3px rgba(var(--bg-text-rgb), 0.1);
+}
+
+/* ========== 18. رسالة عدم وجود أسئلة ========== */
+#no-questions-message {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    background: transparent;
+    border: 2px dashed rgba(var(--bg-text-rgb), 0.15); /* لون أفتح */
+    border-radius: 1rem;
+    color: var(--bg-text);
+    opacity: 0.7;
+    margin: 1rem 0;
+    font-size: 1rem;
+}
+
+/* الشارات الأساسية - جميعها نفس التصميم */
+.groups-badge,
+.active-status-badge,
+.inactive-status-badge {
+    position: absolute;
+    width: 32px; /* حجم موحد */
+    height: 32px; /* حجم موحد */
+    border-radius: 50%;
+    font-size: 0.85rem;
+    font-weight: 600;
+    z-index: 10;
+    border: 2px solid transparent;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+}
+
+/* تموضع الشارات */
+.groups-badge {
+    top: 12px;
+    right: 12px;
+    background: rgba(52, 152, 219, 0.15);
+    color: #2980b9;
+    border-color: rgba(52, 152, 219, 0.35);
+    box-shadow: 0 3px 10px rgba(52, 152, 219, 0.2);
+}
+
+.active-status-badge {
+    top: 12px;
+    left: 12px;
+    background: rgba(46, 204, 113, 0.15);
+    color: #27ae60;
+    border-color: rgba(46, 204, 113, 0.35);
+    box-shadow: 0 3px 10px rgba(46, 204, 113, 0.2);
+}
+
+.inactive-status-badge {
+    top: 12px;
+    left: 12px;
+    background: rgba(231, 76, 60, 0.15);
+    color: #c0392b;
+    border-color: rgba(231, 76, 60, 0.35);
+    box-shadow: 0 3px 10px rgba(231, 76, 60, 0.2);
+}
+
+/* الأيقونات داخل الشارات - تصميم موحد */
+.groups-badge i,
+.active-status-badge i,
+.inactive-status-badge i {
+    font-size: 0.8rem;
+    color: inherit; /* ترث اللون من الشارة الأم */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    line-height: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+}
+
+/* إصلاح محاذاة الفونت أووسم */
+.groups-badge i::before,
+.active-status-badge i::before,
+.inactive-status-badge i::before {
+    display: block !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    vertical-align: middle !important;
+    position: relative !important;
+    top: 0 !important;
+    transform: none !important;
+}
+
+/* إصلاح إضافي لمحاذاة الـ ✓ والـ ✗ */
+.active-status-badge i.fa-check,
+.inactive-status-badge i.fa-times {
+    margin-top: -1px !important; /* تعويض بسيط لمحاذاة أفضل */
+}
+
+/* تأثيرات Hover موحدة */
+.groups-badge:hover,
+.active-status-badge:hover,
+.inactive-status-badge:hover {
+    transform: scale(1.15) translateY(-1px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.groups-badge:hover {
+    background: rgba(52, 152, 219, 0.25);
+    border-color: rgba(52, 152, 219, 0.5);
+}
+
+.active-status-badge:hover {
+    background: rgba(46, 204, 113, 0.25);
+    border-color: rgba(46, 204, 113, 0.5);
+}
+
+.inactive-status-badge:hover {
+    background: rgba(231, 76, 60, 0.25);
+    border-color: rgba(231, 76, 60, 0.5);
+}
+
+/* تأثير Active */
+.groups-badge:active,
+.active-status-badge:active,
+.inactive-status-badge:active {
+    transform: scale(1.05) translateY(0);
+    transition: transform 0.1s ease;
+}
+
+/* ==================== إحصائيات النتائج ==================== */
+#admin-result-container .results-stats-overview {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+}
+
+#admin-result-container .results-stat-card {
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.2);
+    border-radius: 0.8rem;
+    padding: 0.8rem;
+    text-align: center;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px; /* يجعلها مربعة تقريباً */
+}
+
+#admin-result-container .results-stat-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(var(--bg-text-rgb), 0.4);
+}
+
+#admin-result-container .results-stat-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.4rem;
+    color: var(--bg-text);
+}
+
+#admin-result-container .results-stat-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--bg-text);
+    line-height: 1;
+    margin-bottom: 0.2rem;
+}
+
+#admin-result-container .results-stat-label {
+    font-size: 1rem;
+    color: rgba(var(--bg-text-rgb), 0.8);
+    font-weight: 500;
+}
+
+/* ==================== أدوات التحكم ==================== */
+#admin-result-container .results-controls {
+    gap: 0.8rem !important;
+    margin-bottom: 1.2rem !important;
+    background: transparent !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    padding: 0 !important;
+}
+
+#admin-result-container .results-search {
+    position: relative;
+    width: 100%;
+}
+
+#admin-result-container .results-search i {
+    position: absolute;
+    right: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(var(--bg-text-rgb), 0.7);
+    font-size: 0.9rem;
+}
+
+#admin-result-container .results-search input {
+    padding-right: 2.2rem !important;
+    width: 100%;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.3);
+    transition: all 0.2s ease;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+    border-radius: 0.6rem;
+    color: var(--bg-text);
+}
+
+#admin-result-container .results-search input:focus {
+    border-color: var(--bg-text);
+    outline: none;
+}
+
+#admin-result-container .export-btn-wrapper {
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+#admin-result-container .export-results-btn.full-width-btn {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    background: rgba(var(--bg-text-rgb), 0.2);
+    color: var(--bg-text);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.3);
+    border-radius: 0.6rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+#admin-result-container .export-results-btn.full-width-btn:hover {
+    background: rgba(var(--bg-text-rgb), 0.3);
+    border-color: var(--bg-text);
+}
+
+/* ==================== المجموعات والبطاقات ==================== */
+#admin-result-container .results-grid-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+#admin-result-container .results-group-container {
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    border-radius: 0.8rem;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+#admin-result-container .results-group-header {
+    background: rgba(var(--bg-text-rgb), 0.08);
+    padding: 0.8rem;
+    border-bottom: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#admin-result-container .results-group-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+#admin-result-container .results-group-title i {
+    font-size: 1.2rem;
+    color: var(--bg-text);
+}
+
+#admin-result-container .results-group-title span {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--bg-text);
+}
+
+#admin-result-container .results-group-count {
+    background: rgba(var(--bg-text-rgb), 0.15);
+    color: var(--bg-text);
+    padding: 0.2rem 0.6rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+#admin-result-container .results-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+    padding: 1rem;
+}
+
+/* ==================== بطاقات النتائج ==================== */
+#admin-result-container .result-card {
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    border-radius: 0.7rem;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+#admin-result-container .result-card:hover {
+    border-color: rgba(var(--bg-text-rgb), 0.4);
+    transform: translateY(-3px);
+}
+
+#admin-result-container .result-card-header {
+    padding: 0.6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+#admin-result-container .student-avatar {
+    width: 32px;
+    height: 32px;
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.2);
+}
+
+#admin-result-container .student-avatar i {
+    font-size: 1.2rem;
+    color: rgba(var(--bg-text-rgb), 0.8);
+}
+
+#admin-result-container .result-status-badge {
+    padding: 0.2rem 0.5rem;
+    border-radius: 1rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    border: 1px solid currentColor;
+}
+
+#admin-result-container .result-status-badge.passed {
+    background: rgba(46, 204, 113, 0.1);
+    color: #2ecc71;
+}
+
+#admin-result-container .result-status-badge.failed {
+    background: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+}
+
+#admin-result-container .result-status-badge.average {
+    background: rgba(243, 156, 18, 0.1);
+    color: #f39c12;
+}
+
+#admin-result-container .result-card-body {
+    padding: 0.6rem;
+}
+
+#admin-result-container .student-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--bg-text);
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#admin-result-container .exam-info {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+}
+
+#admin-result-container .exam-info i {
+    color: rgba(var(--bg-text-rgb), 0.8);
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
+#admin-result-container .exam-name {
+    font-size: 0.85rem;
+    color: var(--bg-text);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#admin-result-container .result-date {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    color: rgba(var(--bg-text-rgb), 0.7);
+}
+
+#admin-result-container .result-date i {
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
+#admin-result-container .result-card-footer {
+    padding: 0.6rem;
+    border-top: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#admin-result-container .score-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 50px;
+}
+
+#admin-result-container .score-percentage {
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+#admin-result-container .score-label {
+    font-size: 0.7rem;
+    opacity: 0.8;
+    margin-top: 0.1rem;
+}
+
+#admin-result-container .result-actions {
+    display: flex;
+    gap: 0.3rem;
+}
+
+#admin-result-container .result-action-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--bg-text);
+    background: transparent;
+    color: var(--bg-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+#admin-result-container .result-action-btn:hover {
+    background: var(--bg-text);
+    color: var(--bg);
+}
+
+#admin-result-container .result-action-btn.view-btn i {
+    font-size: 0.8rem;
+}
+
+#userModalRoot .modal-header {
+    padding: 0.8rem !important;
+    flex-shrink: 0 !important;
+    border-bottom: 1px solid rgba(var(--bg-text-rgb), 0.2) !important;
+    background: rgba(var(--bg-text-rgb), 0.05);
+}
+
+#userModalRoot .modal-header h2 {
+    font-size: 1.1rem !important;
+    margin: 0 !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#userModalRoot .modal-body {
+    flex: 1 !important;
+    overflow-y: auto !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+    background: rgba(var(--bg-text-rgb), 0.02);
+}
+
+#userModalRoot .modal-footer {
+    padding: 0.8rem !important;
+    border-top: 1px solid rgba(var(--bg-text-rgb), 0.2) !important;
+    display: flex !important;
+    flex-shrink: 0 !important;
+    background: rgba(var(--bg-text-rgb), 0.05) !important;
+}
+
+#userModalRoot .footer-actions {
+    display: flex !important;
+    width: 100% !important;
+    gap: 0.8rem !important;
+}
+
+#userModalRoot .footer-actions .grid-btn {
+    flex: 1 !important;
+    padding: 0.7rem !important;
+    font-size: 0.9rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+}
+
+/* تحسين التمرير في المودال */
+#userModalRoot .modal-body::-webkit-scrollbar {
+    width: 4px;
+}
+
+#userModalRoot .modal-body::-webkit-scrollbar-track {
+    background: rgba(var(--bg-text-rgb), 0.05);
+}
+
+#userModalRoot .modal-body::-webkit-scrollbar-thumb {
+    background: rgba(var(--bg-text-rgb), 0.2);
+    border-radius: 2px;
+}
+
+#userModalRoot .exam-review-header {
+    padding: 1.2rem;
+    background: rgba(var(--bg-text-rgb), 0.08);
+    border-bottom: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    margin: 0;
+    border-radius: 0;
+}
+
+#userModalRoot .exam-info-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+    gap: 1rem;
+    padding: 0;
+    background: transparent;
+    border: none;
+    margin: 0;
+    width: 100%;
+}
+
+#userModalRoot .exam-info-icon {
+    font-size: 1rem;
+    color: var(--bg-text);
+    flex-shrink: 0;
+    margin: 0.1rem;
+}
+
+#userModalRoot .exam-info-icon i {
+    font-size: 1.1rem;
+    color: var(--bg-text);
+}
+
+#userModalRoot .exam-info-content {
+    flex: 1;
+    min-width: 0;
+}
+
+#userModalRoot .exam-info-content h3 {
+    font-size: 1.3rem;
+    color: var(--bg-text);
+    margin: 0 0 0.6rem 0.1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 700;
+    line-height: 1.3;
+    width: 100%;
+}
+
+#userModalRoot .exam-info-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    color: rgba(var(--bg-text-rgb), 0.8);
+    width: 100%;
+}
+
+#userModalRoot .exam-info-details span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 0.4rem;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+}
+
+#userModalRoot .exam-info-details i {
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    color: rgba(var(--bg-text-rgb), 0.7);
+    margin: 0.1rem;
+}
+
+#userModalRoot .exam-summary {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 0.7rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    margin: 1rem 0 0 0;
+}
+
+#userModalRoot .summary-item {
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.2);
+    border-radius: 0.6rem;
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 90px;
+    width: 100%; 
+    box-sizing: border-box;
+}
+
+#userModalRoot .summary-item:hover {
+    border-color: rgba(var(--bg-text-rgb), 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#userModalRoot .summary-label {
+    font-size: 0.9rem;
+    color: rgba(var(--bg-text-rgb), 0.8);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+#userModalRoot .summary-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--bg-text);
+    line-height: 1;
+}
+
+#userModalRoot .exam-questions-review {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    padding: 0.8rem;
+    margin-top: 1.5rem;
+    padding: 0 1.2rem 1.2rem 1.2rem;
+}
+
+#userModalRoot .exam-questions-review .section-title {
+    font-size: 1.1rem;
+    color: var(--bg-text);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    flex-shrink: 0;
+}
+
+#userModalRoot .manual-correction-note {
+    background: rgba(52, 152, 219, 0.1);
+    border: 1px solid rgba(52, 152, 219, 0.2);
+    border-radius: 0.5rem;
+    padding: 0.6rem;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: rgba(var(--bg-text-rgb), 0.9);
+    flex-shrink: 0;
+}
+
+#userModalRoot .manual-correction-note i {
+    color: #3498db;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+#userModalRoot .questions-container {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    margin: 0;
+    border: none;
+    background: transparent;
+}
+
+/* إصلاح التمرير في حاوية الأسئلة */
+#userModalRoot .questions-container::-webkit-scrollbar {
+    width: 4px;
+}
+
+#userModalRoot .questions-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#userModalRoot .questions-container::-webkit-scrollbar-thumb {
+    background: rgba(var(--bg-text-rgb), 0.2);
+    border-radius: 2px;
+}
+
+/* ==================== أسئلة الاختبار (بدون حدود) ==================== */
+#userModalRoot .question-item {
+    background: rgba(var(--bg-text-rgb), 0.03);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    border-radius: 0.6rem;
+    padding: 1rem;
+    flex-shrink: 0;
+}
+
+#userModalRoot .question-item.correct {
+    border-left: 4px solid #2ecc71;
+}
+
+#userModalRoot .question-item.incorrect {
+    border-left: 4px solid #e74c3c;
+}
+
+#userModalRoot .question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+#userModalRoot .question-number {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--bg-text);
+    background: rgba(var(--bg-text-rgb), 0.1);
+    padding: 0.2rem 0.6rem;
+    border-radius: 1rem;
+}
+
+#userModalRoot .question-points {
+    font-size: 0.8rem;
+    color: rgba(var(--bg-text-rgb), 0.8);
+}
+
+#userModalRoot .question-status {
+    padding: 0.2rem 0.6rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid currentColor;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+#userModalRoot .question-status.correct {
+    background: rgba(46, 204, 113, 0.1);
+    color: #2ecc71;
+}
+
+#userModalRoot .question-status.incorrect {
+    background: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+}
+
+#userModalRoot .question-text {
+    font-size: 0.95rem;
+    color: var(--bg-text);
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+/* خيارات الأسئلة متعددة الاختيار */
+#userModalRoot .question-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 0.8rem;
+}
+
+#userModalRoot .option {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 0.7rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    border-radius: 0.5rem;
+    background: rgba(var(--bg-text-rgb), 0.08);
+    position: relative;
+}
+
+#userModalRoot .option.correct-selected {
+    background: rgba(46, 204, 113, 0.1);
+    border-color: #2ecc71;
+}
+
+#userModalRoot .option.wrong-selected {
+    background: rgba(231, 76, 60, 0.1);
+    border-color: #e74c3c;
+}
+
+#userModalRoot .option.correct-not-selected {
+    background: rgba(46, 204, 113, 0.08);
+    border-color: rgba(46, 204, 113, 0.4);
+}
+
+#userModalRoot .option-letter {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--bg-text);
+    min-width: 18px;
+    flex-shrink: 0;
+}
+
+#userModalRoot .option-text {
+    flex: 1;
+    color: var(--bg-text);
+    font-size: 0.85rem;
+    word-break: break-word;
+}
+
+#userModalRoot .option-status {
+    font-size: 0.9rem;
+    margin-left: 0.3rem;
+    flex-shrink: 0;
+}
+
+#userModalRoot .option-status.correct {
+    color: #2ecc71;
+}
+
+#userModalRoot .option-status.wrong {
+    color: #e74c3c;
+}
+
+#userModalRoot .user-choice-label {
+    background: #3498db;
+    color: white;
+    padding: 0.1rem 0.4rem;
+    border-radius: 0.6rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    margin-left: 0.3rem;
+    flex-shrink: 0;
+}
+
+#userModalRoot .correct-label {
+    background: #2ecc71;
+    color: white;
+    padding: 0.1rem 0.4rem;
+    border-radius: 0.6rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    margin-left: 0.3rem;
+    flex-shrink: 0;
+}
+
+#userModalRoot .question-explanation {
+    padding: 0.6rem;
+    background: rgba(var(--bg-text-rgb), 0.08);
+    border-radius: 0.5rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    font-size: 0.85rem;
+    color: var(--bg-text);
+    line-height: 1.4;
+    word-break: break-word;
+    margin-bottom: 0.8rem;
+}
+
+/* عناصر التحكم في التصحيح اليدوي */
+#userModalRoot .manual-correction-control {
+    padding: 0.6rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 0.5rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    margin-top: 0.5rem;
+}
+
+#userModalRoot .manual-correction-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--bg-text);
+}
+
+#userModalRoot .manual-correction-checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+/* ==================== أسئلة الصح والخطأ ==================== */
+#userModalRoot .tf-answers {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+}
+
+#userModalRoot .answer-row {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.5rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 0.5rem;
+}
+
+#userModalRoot .answer-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--bg-text);
+    min-width: 80px;
+}
+
+#userModalRoot .answer-value {
+    flex: 1;
+    font-size: 0.9rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+#userModalRoot .answer-value.correct {
+    background: rgba(46, 204, 113, 0.1);
+    color: #2ecc71;
+}
+
+#userModalRoot .answer-value.wrong {
+    background: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+}
+
+#userModalRoot .answer-value.correct-answer {
+    background: rgba(46, 204, 113, 0.08);
+    color: #2ecc71;
+    border: 1px dashed rgba(46, 204, 113, 0.3);
+}
+
+/* ==================== أسئلة الأكمل ==================== */
+#userModalRoot .blanks-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 0.8rem;
+}
+
+#userModalRoot .blank-item {
+    padding: 0.6rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 0.5rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+}
+
+#userModalRoot .blank-item.correct {
+    border-left: 3px solid #2ecc71;
+}
+
+#userModalRoot .blank-item.incorrect {
+    border-left: 3px solid #e74c3c;
+}
+
+#userModalRoot .blank-text {
+    font-size: 0.9rem;
+    color: var(--bg-text);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+#userModalRoot .blank-answers {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+#userModalRoot .user-blank,
+#userModalRoot .correct-blank {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#userModalRoot .user-blank .label,
+#userModalRoot .correct-blank .label {
+    font-size: 0.8rem;
+    color: rgba(var(--bg-text-rgb), 0.8);
+    min-width: 70px;
+}
+
+#userModalRoot .user-blank .value,
+#userModalRoot .correct-blank .value {
+    flex: 1;
+    font-size: 0.85rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+#userModalRoot .user-blank .value.correct {
+    background: rgba(46, 204, 113, 0.1);
+    color: #2ecc71;
+}
+
+#userModalRoot .user-blank .value.wrong {
+    background: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+}
+
+#userModalRoot .correct-blank .value.correct {
+    background: rgba(46, 204, 113, 0.08);
+    color: #2ecc71;
+    border: 1px dashed rgba(46, 204, 113, 0.3);
+}
+
+/* ==================== رسائل الحالة ==================== */
+#admin-result-container .no-data {
+    text-align: center;
+    padding: 1.5rem 0.8rem;
+    color: rgba(var(--bg-text-rgb), 0.6);
+}
+
+#admin-result-container .no-data i {
+    font-size: 2rem;
+    margin-bottom: 0.8rem;
+    opacity: 0.5;
+}
+
+#admin-result-container .no-data h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.6rem;
+    color: rgba(var(--bg-text-rgb), 0.8);
+}
+
+#admin-result-container .no-data p {
+    font-size: 0.85rem;
+    max-width: 100%;
+    margin: 0 auto;
+    line-height: 1.4;
+}
+
+/* ==================== تحسينات للتركيز ==================== */
+#admin-result-container .result-card:focus-visible {
+    outline: 2px solid rgba(var(--bg-text-rgb), 0.5);
+    outline-offset: 2px;
+}
+
+#admin-result-container .result-action-btn:focus-visible {
+    outline: 2px solid rgba(var(--bg-text-rgb), 0.5);
+    outline-offset: 1px;
+}
+
+/* ==================== إصلاح الحدود للنصوص في المودال ==================== */
+#userModalRoot .no-questions {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: rgba(var(--bg-text-rgb), 0.6);
+    font-size: 0.9rem;
+    border: none !important;
+    background: transparent !important;
+}
+
+/* ==================== محتوى المودال بدون حاويات داخلية ==================== */
+#userModalRoot .exam-review-header {
+    padding: 1rem !important;
+    background: rgba(var(--bg-text-rgb), 0.05) !important;
+    border-bottom: 1px solid rgba(var(--bg-text-rgb), 0.1) !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+}
+
+#userModalRoot .exam-info-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    margin: 0 !important;
+}
+
+#userModalRoot .exam-info-icon {
+    font-size: 2rem;
+    color: var(--bg-text);
+    flex-shrink: 0;
+}
+
+#userModalRoot .exam-info-content {
+    flex: 1;
+    min-width: 0;
+    margin: 0 !important;
+}
+
+#userModalRoot .exam-info-content h3 {
+    font-size: 1.3rem;
+    color: var(--bg-text);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0 0 0.5rem 0 !important;
+}
+
+#userModalRoot .exam-info-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    font-size: 0.85rem;
+    margin: 0 !important;
+}
+
+#userModalRoot .exam-info-details span {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: rgba(var(--bg-text-rgb), 0.8);
+    white-space: nowrap;
+    margin: 0 !important;
+}
+
+#userModalRoot .exam-summary {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+    padding: 1rem !important;
+    background: rgba(var(--bg-text-rgb), 0.05) !important;
+    border-bottom: 1px solid rgba(var(--bg-text-rgb), 0.1) !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+}
+
+#userModalRoot .summary-item {
+    text-align: center;
+    padding: 0.8rem;
+    background: rgba(var(--bg-text-rgb), 0.08);
+    border-radius: 0.6rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    margin: 0 !important;
+}
+
+/* ==================== الأسئلة مباشرة في المودال ==================== */
+#userModalRoot .section-title {
+    font-size: 1.1rem;
+    color: var(--bg-text);
+    margin: 1rem !important;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    flex-shrink: 0;
+}
+
+#userModalRoot .manual-correction-note {
+    background: rgba(52, 152, 219, 0.1);
+    border: 1px solid rgba(52, 152, 219, 0.2);
+    border-radius: 0.5rem;
+    padding: 0.8rem;
+    margin: 0 1rem 1rem 1rem !important;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: rgba(var(--bg-text-rgb), 0.9);
+    flex-shrink: 0;
+}
+
+#userModalRoot .manual-correction-note i {
+    color: #3498db;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+/* إزالة كل الحاويات الداخلية وجعل الأسئلة مباشرة في body */
+#userModalRoot .questions-container {
+    display: block !important;
+    padding: 0 1rem 1rem 1rem !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    flex: none !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+#userModalRoot .question-item {
+    background: rgba(var(--bg-text-rgb), 0.03);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    border-radius: 0.6rem;
+    padding: 1rem;
+    margin-bottom: 1rem !important;
+    flex-shrink: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#userModalRoot .question-item:last-child {
+    margin-bottom: 0 !important;
+}
+
+#userModalRoot .question-item.correct {
+    border-left: 4px solid #2ecc71;
+}
+
+#userModalRoot .question-item.incorrect {
+    border-left: 4px solid #e74c3c;
+}
+
+/* ==================== إزالة كل المرونة والحاويات المتداخلة ==================== */
+#userModalRoot .exam-questions-review {
+    display: block !important;
+    flex: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+/* ====================  الحضور ==================== */
+/* ==================== إحصائيات الحضور ==================== */
+#admin-result-container .attendance-stats-overview {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+}
+
+#admin-result-container .attendance-stat-card {
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.2);
+    border-radius: 0.8rem;
+    text-align: center;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px !important; 
+    padding: 0.8rem !important; 
+}
+
+#admin-result-container .attendance-stat-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(var(--bg-text-rgb), 0.4);
+}
+
+#admin-result-container .attendance-stat-icon {
+    font-size: 1.5rem !important;
+    margin-bottom: 0.4rem !important;
+    color: var(--bg-text);
+}
+
+#admin-result-container .attendance-stat-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--bg-text);
+    line-height: 1;
+    margin-bottom: 0.2rem;
+}
+
+#admin-result-container .attendance-stat-label {
+    font-size: 0.8rem;
+    color: rgba(var(--bg-text-rgb), 0.8);
+    font-weight: 500;
+}
+
+.section-content .attendance-stats-overview .attendance-stat-label {
+    font-size: 1.1rem !important;
+}
+
+.section-content .attendance-stats-overview .attendance-stat-value {
+    font-size: 1.6rem !important;
+}
+
+/* ==================== شبكة بطاقات المحاضرات ==================== */
+#admin-result-container .attendance-lectures-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+#admin-result-container .attendance-lecture-card {
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.15);
+    border-radius: 0.8rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==================== إصلاح رأس الكارت (2 في الصف دائماً) ==================== */
+#admin-result-container .attendance-lecture-header {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+#admin-result-container .attendance-lecture-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--bg-text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#admin-result-container .attendance-lecture-title i {
+    font-size: 1.2rem;
+    color: rgba(var(--bg-text-rgb), 0.8);
+}
+
+#admin-result-container .attendance-lecture-meta {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+    font-size: 0.8rem;
+    color: rgba(var(--bg-text-rgb), 0.7);
+}
+
+#admin-result-container .attendance-lecture-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.4rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#admin-result-container .attendance-lecture-meta i {
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+/* ==================== إحصائيات البطاقة ==================== */
+#admin-result-container .attendance-lecture-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    padding: 0.8rem;
+    background: rgba(var(--bg-text-rgb), 0.08);
+    border-bottom: 1px solid rgba(var(--bg-text-rgb), 0.1);
+}
+
+#admin-result-container .attendance-stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4rem 0.6rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 0.4rem;
+}
+
+#admin-result-container .attendance-stat-label {
+    font-size: 0.8rem;
+    color: rgba(var(--bg-text-rgb), 0.8);
+}
+
+#admin-result-container .attendance-stat-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--bg-text);
+}
+
+#admin-result-container .attendance-stat-value.present {
+    color: #2ecc71;
+}
+
+#admin-result-container .attendance-stat-value.absent {
+    color: #e74c3c;
+}
+
+#admin-result-container .attendance-stat-value.late {
+    color: #f39c12;
+}
+
+#admin-result-container .attendance-stat-value.excused {
+    color: #3498db;
+}
+
+/* ==================== زر تسجيل الحضور - معدل ليطابق الستايل ==================== */
+#admin-result-container .attendance-lecture-actions {
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    background: rgba(var(--bg-text-rgb), 0.03);
+}
+
+#admin-result-container .attendance-action-btn {
+    padding: 0.6rem 1.2rem;
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.3);
+    color: var(--bg-text);
+    border-radius: 0.6rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+    width: 100%;
+    justify-content: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#admin-result-container .attendance-action-btn:hover {
+    background: rgba(var(--bg-text-rgb), 0.2);
+    border-color: var(--bg-text);
+}
+
+/* ==================== مودال  ==================== */
+#userModalRoot .modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0;
+    display: block;
+    min-height: 0;
+    background: rgba(var(--bg-text-rgb), 0.02);
+}
+
+/* معلومات المحاضرة في المودال - تصميم جديد بصورة عرض أفقي */
+#userModalRoot .attendance-lecture-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-bottom: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    text-align: center;
+}
+
+#userModalRoot .attendance-lecture-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border-radius: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin: 0.1rem;
+}
+
+#userModalRoot .attendance-lecture-icon i {
+    font-size: 1.8rem;
+    color: var(--bg-text);
+    margin: 0.1rem;
+}
+
+#userModalRoot .attendance-lecture-details {
+    flex: 1;
+    min-width: 0;
+}
+
+#userModalRoot .attendance-lecture-details h3 {
+    font-size: 1.3rem;
+    color: var(--bg-text);
+    margin: 0 0 0.8rem 0;
+    font-weight: 600;
+    margin: 0.1rem;
+}
+
+/* تصميم جديد: 4 عناصر في سطر واحد (شبكة 4 أعمدة) */
+#userModalRoot .attendance-lecture-meta-details {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.8rem;
+    font-size: 0.85rem;
+    color: rgba(var(--bg-text-rgb), 0.8);
+}
+
+#userModalRoot .attendance-lecture-meta-details span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    padding: 0.5rem;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 0.4rem;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#userModalRoot .attendance-lecture-meta-details i {
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+/* ==================== إحصائيات سريعة في المودال (أزرار تسجيل الكل) ==================== */
+#userModalRoot .attendance-stats-summary {
+    padding: 1rem;
+    background: rgba(var(--bg-text-rgb), 0.03);
+    border-bottom: 1px solid rgba(var(--bg-text-rgb), 0.1);
+}
+
+#userModalRoot .stats-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+}
+
+#userModalRoot .stat-btn {
+    padding: 0.6rem;
+    background: rgba(var(--bg-text-rgb), 0.08);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.2);
+    color: var(--bg-text);
+    border-radius: 0.5rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+#userModalRoot .stat-btn:hover {
+    background: rgba(var(--bg-text-rgb), 0.15);
+    border-color: var(--bg-text);
+}
+
+/* حاوية المجموعات والطلاب */
+#userModalRoot .attendance-groups-container {
+    padding: 1rem;
+}
+
+#userModalRoot .attendance-group-section {
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    border-radius: 0.6rem;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+#userModalRoot .group-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.8rem;
+    background: rgba(var(--bg-text-rgb), 0.08);
+    border-bottom: 1px solid rgba(var(--bg-text-rgb), 0.1);
+}
+
+#userModalRoot .group-header h4 {
+    font-size: 1rem;
+    color: var(--bg-text);
+    margin: 0;
+    font-weight: 600;
+    flex: 1;
+}
+
+#userModalRoot .student-count {
+    background: rgba(var(--bg-text-rgb), 0.15);
+    color: var(--bg-text);
+    padding: 0.2rem 0.6rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+#userModalRoot .group-students {
+    padding: 0.5rem;
+}
+
+/* عناصر الطلاب */
+#userModalRoot .attendance-student-item {
+    padding: 0.6rem;
+    background: rgba(var(--bg-text-rgb), 0.03);
+    border: 1px solid rgba(var(--bg-text-rgb), 0.08);
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+#userModalRoot .student-info {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex: 1;
+    min-width: 0;
+}
+
+#userModalRoot .student-avatar {
+    width: 36px;
+    height: 36px;
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.2);
+    flex-shrink: 0;
+}
+
+#userModalRoot .student-avatar i {
+    font-size: 1.2rem;
+    color: rgba(var(--bg-text-rgb), 0.8);
+}
+
+#userModalRoot .student-details {
+    flex: 1;
+    min-width: 0;
+}
+
+#userModalRoot .student-name {
+    font-size: 0.95rem;
+    color: var(--bg-text);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#userModalRoot .student-email {
+    font-size: 0.8rem;
+    color: rgba(var(--bg-text-rgb), 0.7);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* حالة الطالب - معدل: الشارة على اليسار والسيلكت على اليمين */
+#userModalRoot .student-status-combo {
+    display: flex;
+    align-items: stretch;
+    height: 40px;
+    border-radius: 0.4rem;
+    overflow: hidden;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.3);
+    background: rgba(var(--bg-text-rgb), 0.05);
+    width: 100%;
+    flex-shrink: 0;
+}
+
+#userModalRoot .status-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.8rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-align: center;
+    width: 50%;
+    border-right: 1px solid rgba(var(--bg-text-rgb), 0.3);
+    white-space: nowrap;
+    background: rgba(var(--bg-text-rgb), 0.1);
+    flex: 0 0 50%;
+    border-radius: 0.4rem 0 0 0.4rem;
+}
+
+#userModalRoot .status-select.combo-select-right {
+    flex: 0 0 50%;
+    padding: 0 2rem 0 0.8rem;
+    border: none;
+    background: transparent;
+    color: var(--bg-text);
+    font-size: 0.85rem;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23c0b49e' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left 0.6rem center;
+    background-size: 12px;
+    outline: none;
+    cursor: pointer;
+    height: 100%;
+    border-radius: 0 0.4rem 0.4rem 0;
+}
+
+/* ألوان الحالات */
+#userModalRoot .status-badge.present {
+    background: rgba(46, 204, 113, 0.2);
+    color: #2ecc71;
+    border-color: rgba(46, 204, 113, 0.3);
+}
+
+#userModalRoot .status-badge.absent {
+    background: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+    border-color: rgba(231, 76, 60, 0.3);
+}
+
+#userModalRoot .status-badge.late {
+    background: rgba(243, 156, 18, 0.2);
+    color: #f39c12;
+    border-color: rgba(243, 156, 18, 0.3);
+}
+
+#userModalRoot .status-badge.excused {
+    background: rgba(52, 152, 219, 0.2);
+    color: #3498db;
+    border-color: rgba(52, 152, 219, 0.3);
+}
+
+/* ملاحظات */
+#userModalRoot .attendance-notes-section {
+    padding: 1rem;
+    border-top: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    background: rgba(var(--bg-text-rgb), 0.05);
+}
+
+#userModalRoot .attendance-notes-section label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--bg-text);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+#userModalRoot .attendance-notes-section textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.3);
+    background: rgba(var(--bg-text-rgb), 0.05);
+    color: var(--bg-text);
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    resize: vertical;
+    min-height: 80px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+/* ==================== ستايل رسالة "لا يوجد طلاب" ==================== */
+#userModalRoot .no-students {
+    padding: 3rem 1.5rem;
+    text-align: center;
+    color: var(--bg-text);
+    opacity: 0.7;
+    background: rgba(var(--bg-text-rgb), 0.05);
+    border-radius: 1rem;
+    border: 2px dashed rgba(var(--bg-text-rgb), 0.2);
+    margin: 1rem 0;
+}
+
+#userModalRoot .no-students i {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    display: block;
+    color: rgba(var(--bg-text-rgb), 0.5);
+}
+
+#userModalRoot .no-students span {
+    font-size: 1.2rem;
+    display: block;
+    font-weight: 500;
+}
+
+/* ==================== تنسيق أزرار المودال - معدل ==================== */
+#userModalRoot .modal-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1rem;
+    border-top: 1px solid rgba(var(--bg-text-rgb), 0.1);
+    background: rgba(var(--bg-text-rgb), 0.05);
+}
+
+#userModalRoot .modal-btn {
+    padding: 0.7rem 1.5rem;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.3);
+    background: rgba(var(--bg-text-rgb), 0.1);
+    color: var(--bg-text);
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+    width: 100%;
+    justify-content: center;
+}
+
+#userModalRoot .modal-btn.save {
+    background: rgba(var(--bg-text-rgb), 0.1);
+    border-color: rgba(var(--bg-text-rgb), 0.3);
+    color: var(--bg-text);
+}
+
+#userModalRoot .modal-btn.save:hover {
+    background: rgba(var(--bg-text-rgb), 0.2);
+    border-color: var(--bg-text);
+}
+
+/* ==================== أيقونة المجموعة ==================== */
+#userModalRoot .group-header i {
+    color: var(--bg-text);
+}
+
+/* ==================================================
+   تصميم متكامل لفلاتر الاختبارات (سيلكتان متجاوران)
+================================================== */
+.exams-filters-combo {
+    margin: 1.8rem 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.combo-filters-wrapper {
+    display: flex;
+    max-width: 500px;
+    width: 100%;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    border: 2px solid var(--bg-text);
+}
+
+.combo-filters-wrapper:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    border-color: var(--bg-text);
+}
+
+/* تصميم أساسي للسيلكت */
+.combo-filter-select {
+    flex: 1;
+    padding: 0.9rem 1.2rem;
+    background: var(--bg-card);
+    color: var(--bg-text);
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-repeat: no-repeat;
+    background-position: left 1.2rem center;
+    background-size: 14px;
+    padding-left: 2.8rem;
+    position: relative;
+    min-height: 50px;
+}
+
+/* إضافة أيقونة السهم */
+.combo-filter-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+/* السيلكت اليميني (الحالة) */
+.combo-filter-right {
+    border-right: 1px solid var(--bg-text);
+    border-radius: 0;
+    text-align: right;
+    background-position: right 1.2rem center;
+    padding-right: 2.8rem;
+    padding-left: 1.2rem;
+}
+
+/* السيلكت اليساري (المادة) */
+.combo-filter-left {
+    border-left: 1px solid var(--bg-text);
+    border-radius: 0;
+    text-align: right;
+}
+
+/* تأثيرات التمرير */
+.combo-filter-select:hover {
+    background-color: rgba(var(--bg-text-rgb), 0.08);
+}
+
+/* تأثير التركيز */
+.combo-filter-select:focus {
+    background-color: rgba(var(--bg-text-rgb), 0.12);
+    box-shadow: inset 0 0 0 2px rgba(var(--bg-text-rgb), 0.2);
+}
+
+/* تصميم خيارات السيلكت */
+.combo-filter-select option {
+    background: var(--bg-card);
+    color: var(--bg-text);
+    padding: 0.8rem;
+    font-size: 0.95rem;
+}
+
+.combo-filter-select option:hover,
+.combo-filter-select option:focus,
+.combo-filter-select option:checked {
+    background: var(--bg-text);
+    color: var(--bg);
+}
+
+/* ==================== فلاتر البحث المدمجة ==================== */
+#admin-result-container .attendance-filters-combo {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.8rem !important;
+    width: 100% !important;
+}
+
+#admin-result-container .combo-filters-wrapper {
+    display: flex !important;
+    width: 100% !important;
+    height: 50px !important;
+    border-radius: 0.8rem !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.3);
+    background: rgba(var(--bg-text-rgb), 0.05);
+}
+
+#admin-result-container .combo-filter-select {
+    flex: 1;
+    padding: 0 0.8rem;
+    border: none;
+    background: transparent;
+    color: var(--bg-text);
+    font-size: 0.9rem;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23c0b49e' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left 0.7rem center;
+    background-size: 12px;
+    padding-left: 2.5rem;
+    outline: none;
+    height: 100%;
+    cursor: pointer;
+}
+
+#admin-result-container .combo-filter-select:focus {
+    background-color: rgba(var(--bg-text-rgb), 0.1);
+}
+
+#admin-result-container .combo-filter-right {
+    border-left: 1px solid rgba(var(--bg-text-rgb), 0.3);
+}
+
+#admin-result-container .combo-filter-left {
+    border-right: 1px solid rgba(var(--bg-text-rgb), 0.3);
+}
+
+#admin-result-container .combo-filters-wrapper .combo-filter-select {
+    flex: 0 0 50% !important;
+    width: 50% !important;
+    max-width: 50% !important;
+    border: none !important;
+    border-radius: 0 !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+}
+
+/* استهداف فلاتر قسم النتائج فقط */
+#admin-result-container .results-controls .results-filters {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#admin-result-container .results-controls .filter-row.combo-row {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    border-radius: 0.8rem;
+    overflow: hidden;
+    border: 1px solid rgba(var(--bg-text-rgb), 0.3);
+    background: rgba(var(--bg-text-rgb), 0.05);
+}
+
+#admin-result-container .results-controls .combo-filter-select {
+    flex: 1;
+    padding: 0 0.8rem;
+    border: none !important;
+    background: transparent;
+    color: var(--bg-text);
+    font-size: 0.9rem;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23c0b49e' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left 0.7rem center;
+    background-size: 12px;
+    padding-left: 2.5rem;
+    outline: none;
+    height: 100%;
+    cursor: pointer;
+    font-weight: 500;
+    text-align: right;
+}
+
+#admin-result-container .results-controls .combo-filter-select:focus {
+    background-color: rgba(var(--bg-text-rgb), 0.1);
+}
+
+#admin-result-container .results-controls .combo-filter-right {
+    border-left: 1px solid rgba(var(--bg-text-rgb), 0.3);
+}
+
+#admin-result-container .results-controls .combo-filter-left {
+    border-right: 1px solid rgba(var(--bg-text-rgb), 0.3);
+}
+
+#admin-result-container .results-controls .combo-filters-wrapper .combo-filter-select {
+    flex: 0 0 50%;
+    width: 50%;
+    max-width: 50%;
+    border: none !important;
+}
+
+#admin-result-container .results-search {
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+#admin-result-container .export-btn-wrapper {
+    width: 100% !important;
+    margin-top: 0.5rem !important;
+}
+
+#admin-result-container .export-results-btn {
+    width: 100% !important;
+    justify-content: center !important;
+}
+
+#file-preview img,
+.preview-section img,
+.preview-section .preview-image,
+.image-preview-modal img {
+    animation: fadeInScale 0.3s ease-out;
+}
+
+
+.modal-backdrop .modal-content-new {
+    animation: modalFadeIn 0.5s ease-out;
+}
+
+/* ==================== أنيميشنز ==================== */
+@keyframes wave {
+    0%, 60%, 100% {
+        height: 40%;
+        opacity: 0.6;
+    }
+    30% {
+        height: 80%;
+        opacity: 1;
+    }
+}
+
+@keyframes pulseBorder {
+    0%, 100% {
+        border-color: rgba(var(--chat-voice), 0.3);
+    }
+    50% {
+        border-color: rgba(var(--chat-voice), 0.6);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ==================== تأثيرات رسومية إضافية ==================== */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* تحسين ظهور/اختفاء المودال */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ==================== تحسينات الوصول ==================== */
+@media (prefers-reduced-motion: reduce) {
+    .message-advanced,
+    .tool-btn,
+    .send-message-btn,
+    .play-voice-btn,
+    .play-audio-btn,
+    .download-file-btn,
+    .recording-action-btn,
+    .chat-action-btn,
+    .wave {
+        transition: none;
+        animation: none;
+    }
+}
+
+/* تحسين التركيز للمستخدمين */
+.advanced-chat-input:focus,
+.tool-btn:focus,
+.send-message-btn:focus,
+.chat-action-btn:focus,
+.recording-action-btn:focus,
+.play-voice-btn:focus,
+.play-audio-btn:focus,
+.download-file-btn:focus {
+    outline: 2px solid var(--chat-accent);
+    outline-offset: 1px;
+}
+/* ==================================================
+   SMALL SCREENS (Up to 480px)
+================================================== */
+@media only screen and (max-width: 480px) {
+    /* تحسينات المودال للشاشات الصغيرة جداً */
+    .modal-backdrop {
+        padding: 10px 5px 5px 5px;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    
+    .modal-content-new {
+        width: 95% !important;
+        max-width: 95% !important;
+        height: 90vh !important;
+        max-height: 90vh !important;
+        min-height: 90vh !important;
+        border-radius: 1rem;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    /* تأثير ظهور المودال في الجوال */
+    .modal-backdrop.active .modal-content-new {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    
+    /* إصلاح الهيدر */
+    .modal-header {
+        padding: 1rem !important;
+        border-radius: 1rem 1rem 0 0;
+        position: relative;
+        top: 0;
+        min-height: 60px;
+        flex-shrink: 0;
+        border-bottom: 2px solid var(--bg-text);
+        background: var(--bg-card);
+    }
+    
+    .modal-header h2 {
+        font-size: 1.2rem !important;
+        max-width: 70%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    /* إصلاح محتوى النموذج */
+    .form-compact-new {
+        padding: 1.2rem 1rem !important;
+        min-height: calc(90vh - 160px) !important;
+        max-height: calc(90vh - 160px) !important;
+        overflow-y: auto !important;
+        flex: 1 !important;
+        -webkit-overflow-scrolling: touch;
+        margin-bottom: 0;
+        scrollbar-width: thin;
+        /* مسافة أكبر للفوتر في الموبايل */
+        padding-bottom: 20px !important;
+    }
+    
+    /* إصلاح الفوتر */
+    .form-actions {
+        padding: 1rem !important;
+        gap: 0.5rem !important;
+        flex-wrap: nowrap;
+        position: sticky !important;
+        bottom: 0;
+        margin-top: 10px !important; /* مسافة فوق الفوتر */
+        background: var(--bg-card);
+        border-top: 2px solid var(--bg-text);
+        border-radius: 0 0 1rem 1rem !important;
+        flex-shrink: 0;
+        z-index: 10;
+        min-height: 70px;
+        box-sizing: border-box;
+    }
+    
+    /* حالة زر واحد فقط */
+    .form-actions:has(.grid-btn:only-child) {
+        justify-content: center;
+    }
+    
+    .form-actions:has(.grid-btn:only-child) .grid-btn {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0.8rem !important;
+    }
+    
+    /* حالتين للأزرار */
+    .form-actions:has(.grid-btn:nth-child(2):last-child) {
+        justify-content: space-between;
+        gap: 0.5rem !important;
+    }
+    
+    .form-actions:has(.grid-btn:nth-child(2):last-child) .grid-btn {
+        flex: 0 0 calc(50% - 0.25rem) !important;
+        max-width: calc(50% - 0.25rem) !important;
+        padding: 0.7rem 0.5rem !important;
+        font-size: 0.85rem !important;
+        min-width: 0 !important;
+    }
+    
+    /* ثلاث أزرار أو أكثر */
+    .form-actions:has(.grid-btn:nth-child(3)) {
+        gap: 0.4rem !important;
+    }
+    
+    .form-actions:has(.grid-btn:nth-child(3)) .grid-btn {
+        flex: 1 !important;
+        min-width: calc(33.333% - 0.3rem) !important;
+        padding: 0.6rem 0.4rem !important;
+        font-size: 0.8rem !important;
+        gap: 0.2rem !important;
+    }
+    
+    /* إصلاح حقول الإدخال */
+    .form-compact-new input,
+    .form-compact-new select,
+    .form-compact-new textarea,
+    .admin-form input,
+    .admin-form select,
+    .admin-form textarea {
+        padding: 0.7rem 0.8rem !important;
+        font-size: 0.9rem !important;
+        border-radius: 0.6rem !important;
+        border-width: 1.5px !important;
+    }
+    
+    /* إصلاح النصوص */
+    .form-compact-new label,
+    .admin-form label {
+        font-size: 0.9rem !important;
+        margin-bottom: 0.4rem !important;
+    }
+    
+    /* إصلاح شبكة الأيقونات */
+    .icon-grid {
+        max-height: 130px !important;
+        grid-template-columns: repeat(auto-fill, minmax(32px, 1fr)) !important;
+        gap: 0.3rem !important;
+        padding: 0.4rem !important;
+    }
+    
+    .icon-option {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 0.85rem !important;
+    }
+    
+    /* إصلاح القوائم المنسدلة */
+    .students-selector {
+        max-height: 120px;
+        overflow-y: auto;
+    }
+    
+    /* إصلاح textarea */
+    .form-compact-new textarea,
+    .admin-form textarea {
+        min-height: 100px !important;
+    }
+    
+    /* تحسين التمرير */
+    .modal-content-new {
+        scrollbar-width: thin;
+    }
+    
+    /* إصلاح الصفوف */
+    .form-row {
+        gap: 0.8rem !important;
+        margin-bottom: 1.2rem !important;
+    }
+    
+    .form-row .half {
+        min-width: 100% !important;
+        flex: 0 0 100% !important;
+    }
+    
+    /* ==================== إصلاحات قسم رسالة الترحيب ==================== */
+    .admin-form {
+        padding: 0.5rem 0 !important;
+    }
+    
+    .admin-form .form-group {
+        margin-bottom: 1.2rem !important;
+    }
+    
+    .admin-form .form-buttons {
+        margin-top: 1.5rem !important;
+        padding: 0 !important;
+    }
+    
+    .admin-form .btn {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0.8rem !important;
+        font-size: 1rem !important;
+    }
+
+    .messages-filters select {
+        background-position: left 0.8rem center;
+        background-size: 10px;
+        padding: 0.7rem 2rem 0.7rem 2.5rem;
+    }
+    
+    .sender-avatar {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+    }
+    
+    .sender-name {
+        font-size: 1.2rem;
+    }
+    
+    .message-content-title {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .message-content-title h4 {
+        font-size: 1.1rem;
+    }
+    
+    .message-text-large {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        max-height: 200px;
+    }
+
+    .multi-select-grid {
+        padding: 0.6rem !important;
+        gap: 0.5rem !important;
+        grid-template-columns: 1fr;
+        max-height: 350px;
+    }
+    
+    .select-option {
+        padding: 0.6rem !important;
+        gap: 0.6rem !important;
+    }
+    
+    .select-option input[type="checkbox"] {
+        width: 18px !important;
+        height: 18px !important;
+    }
+    
+    .select-option .option-text {
+        font-size: 0.85rem !important;
+    }
+
+    .contact-section,
+    .date-section,
+    .status-section {
+        padding: 0.8rem !important;
+        margin-top: 0.8rem !important;
+    }
+    
+    .contact-value {
+        font-size: 0.9rem !important;
+        padding: 0.4rem 0.6rem !important;
+    }
+    
+    .contact-section .contact-value {
+        font-size: 0.85rem !important;
+    }
+    
+    .message-sender-info .sender-avatar {
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 1.5rem !important;
+    }
+
+    /* تبويبات المواد الدراسية */
+    .subjects-tabs-wrapper {
+        margin: 0 -1rem;
+        padding: 0 1rem 1rem;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .subjects-tabs-scroll {
+        display: flex;
+        gap: 0.5rem;
+        padding-bottom: 0.5rem;
+        min-width: max-content;
+    }
+    
+    .subject-tab-btn {
+        padding: 0.6rem 1rem;
+        border: 2px solid var(--bg-text);
+        background: transparent;
+        color: var(--bg-text);
+        border-radius: 0.75rem;
+        font-size: 0.85rem;
+        white-space: nowrap;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .subject-tab-btn.active {
+        background: var(--bg-text);
+        color: var(--bg);
+    }
+    
+    .subject-tab-btn i {
+        font-size: 0.9rem;
+    }
+    
+    /* رسالة عدم اختيار مادة */
+    .content-placeholder {
+        padding: 3rem 1.5rem;
+        text-align: center;
+        margin-top: 2rem;
+    }
+    
+    .content-placeholder i {
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+        opacity: 0.7;
+    }
+    
+    .content-placeholder h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .content-placeholder p {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        opacity: 0.8;
+    }
+    
+    /* تبويبات أنواع المحتوى */
+    .content-type-tabs {
+        display: flex;
+        gap: 0.5rem;
+        margin: 1.5rem 0;
+        padding: 0.5rem;
+        background: rgba(var(--bg-text-rgb), 0.05);
+        border-radius: 0.75rem;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .content-type-tab {
+        padding: 0.6rem 1rem;
+        border: 2px solid var(--bg-text);
+        background: transparent;
+        color: var(--bg-text);
+        border-radius: 0.75rem;
+        font-size: 0.85rem;
+        white-space: nowrap;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .content-type-tab.active {
+        background: var(--bg-text);
+        color: var(--bg);
+    }
+    
+    .content-type-tab i {
+        font-size: 0.9rem;
+    }
+    
+    /* زر إضافة المحتوى */
+    .add-content-btn-wrapper {
+        margin: 1.5rem 0;
+    }
+    
+    .add-content-btn {
+        width: 100%;
+        padding: 0.9rem;
+        border: 2px solid var(--bg-text);
+        background: var(--bg-text);
+        color: var(--bg);
+        border-radius: 0.75rem;
+        font-size: 1rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.8rem;
+        transition: all 0.3s ease;
+    }
+    
+    .add-content-btn:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+    }
+    
+    /* لوحات المحتوى */
+    .content-tabs-container {
+        margin-top: 1rem;
+    }
+    
+    .content-tab-panel {
+        display: none;
+    }
+    
+    .content-tab-panel.active {
+        display: block;
+    }
+    
+    /* بطاقات المحتوى */
+    .content-card {
+        background: rgba(var(--bg-text-rgb), 0.05);
+        border: 2px solid rgba(var(--bg-text-rgb), 0.2);
+        border-radius: 0.75rem;
+        padding: 1rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .content-card:hover {
+        border-color: var(--bg-text);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .content-card-icon {
+        width: 50px;
+        height: 50px;
+        background: rgba(var(--bg-text-rgb), 0.1);
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+    }
+    
+    .content-card-icon i {
+        font-size: 1.5rem;
+        color: var(--bg-text);
+    }
+    
+    .content-card-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--bg-text);
+        text-align: center;
+        margin-bottom: 0.5rem;
+        line-height: 1.3;
+    }
+    
+    .content-card-size {
+        font-size: 0.8rem;
+        color: var(--bg-text);
+        opacity: 0.7;
+        text-align: center;
+    }
+    
+    .file-upload-label {
+        padding: 0.8rem;
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .file-upload-label i {
+        font-size: 1.2rem;
+    }
+    
+    .pdf-action-btn {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0.8rem !important;
+        font-size: 0.95rem !important;
+        gap: 0.5rem !important;
+        margin: 0 auto !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    .image-preview-modal .preview-image {
+        max-height: 200px;
+    }
+    
+    .audio-preview-modal,
+    .pdf-preview-modal {
+        padding: 1rem;
+    }
+
+    /* تحسين معاينة الصور */
+    .image-preview-modal .preview-image {
+        max-height: 180px !important;
+    }
+    
+    /* تحسين مشغل الصوت */
+    .audio-preview-modal .audio-player {
+        height: 40px !important;
+    }
+    
+    /* تحسين روابط الملفات */
+    .file-link {
+        word-break: break-all !important;
+        display: block !important;
+        text-align: center !important;
+        padding: 0.5rem !important;
+        font-size: 0.8rem !important;
+    }
+
+    /* ✅ منع خروج Cloudinary ID من الحاوية */
+    .file-link-container {
+        word-break: break-all !important;
+        overflow-wrap: break-word !important;
+    }
+    
+    .file-id {
+        word-break: break-all !important;
+        overflow-wrap: break-word !important;
+        font-size: 0.75rem !important;
+        padding: 0.4rem !important;
+        margin-top: 0.5rem !important;
+    }
+    
+    /* تحسين حقل رفع الملف في الموبايل */
+    .file-upload-label {
+        padding: 0.7rem !important;
+    }
+
+    /* ✅ تصغير أيقونة التحميل في الزر */
+    .pdf-action-btn i {
+        font-size: 0.9rem !important;
+        margin: 0 !important;
+    }
+    
+    /* ✅ أيقونة PDF الكبيرة في المعاينة - ضبط الحجم */
+    .pdf-preview-modal i.fa-file-pdf {
+        font-size: 2.5rem !important;
+        color: var(--bg-text) !important; /* تتبع لون الثيم */
+        margin-bottom: 0.8rem !important;
+    }
+    
+    /* ✅ تصغير أيقونة حجم الملف */
+    .file-id i,
+    .pdf-preview-modal .fa-info-circle {
+        font-size: 0.8rem !important;
+        opacity: 0.7;
+    }
+    
+    /* ✅ تصميم كروت المحتوى الجديدة للجوال */
+    .content-card-new {
+        height: 180px !important;
+        min-height: 180px !important;
+    }
+
+    .content-card-header {
+        padding: 0.4rem 0.6rem !important;
+        min-height: 40px !important;
+    }
+
+    .content-badge-groups,
+    .content-badge-cloudinary {
+        width: 22px !important;
+        height: 22px !important;
+        font-size: 0.65rem !important;
+    }
+
+    .content-card-body {
+        padding: 0.5rem 0.6rem 0.3rem !important;
+    }
+
+    .content-card-body .image-preview-container {
+        height: 80px !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    .content-card-body i {
+        font-size: 1.8rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    .content-card-footer {
+        padding: 0.5rem 0.6rem !important;
+        min-height: 45px !important;
+    }
+
+    .content-card-title {
+        font-size: 0.85rem !important;
+    }
+
+    .content-card-size {
+        font-size: 0.75rem !important;
+    }
+    
+    /* 🔧 إصلاح: جعل الكروت تظهر 2 في الصف */
+    #admin-result-container .attendance-lectures-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+        margin-top: 1rem;
+    }
+    
+    #admin-result-container .attendance-lecture-card {
+        margin-bottom: 0 !important; /* إزالة الهامش السفلي لأن الفجوة في الـgrid تكفي */
+        width: 100%;
+        min-height: 200px; /* ارتفاع مناسب للجوال */
+    }
+    
+    /* تحسين محتوى الكروت للعرض المزدوج */
+    #admin-result-container .attendance-lecture-header {
+        padding: 0.6rem;
+        flex: 1;
+    }
+    
+    #admin-result-container .attendance-lecture-title {
+        font-size: 0.9rem !important; /* تصغير النص ليناسب */
+        line-height: 1.3;
+    }
+    
+    #admin-result-container .attendance-lecture-meta {
+        gap: 0.4rem;
+        font-size: 0.7rem;
+        flex-wrap: wrap;
+    }
+    
+    #admin-result-container .attendance-lecture-stats {
+        padding: 0.5rem;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.4rem;
+        font-size: 0.75rem;
+    }
+    
+    #admin-result-container .attendance-stat-item {
+        padding: 0.3rem 0.4rem;
+    }
+    
+    #admin-result-container .attendance-stat-label {
+        font-size: 0.65rem;
+    }
+    
+    #admin-result-container .attendance-stat-value {
+        font-size: 0.8rem;
+    }
+    
+    #admin-result-container .attendance-lecture-actions {
+        padding: 0.5rem;
+    }
+    
+    #admin-result-container .attendance-action-btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+        width: 100%;
+        justify-content: center;
+    }
+
+    #file-preview img {
+        max-height: 180px;
+        max-width: 95%;
+        padding: 6px;
+        border-radius: 0.5rem;
+    }
+    
+    .preview-section img,
+    .preview-section .preview-image,
+    .image-preview-modal img {
+        max-height: 200px;
+        max-width: 95%;
+        padding: 8px;
+        border-radius: 0.5rem;
+    }
+    
+    .preview-section,
+    .image-preview-modal,
+    .audio-preview-modal,
+    .pdf-preview-modal {
+        padding: 0.8rem;
+        border-radius: 0.6rem;
+    }
+    
+    #file-preview div,
+    .image-info,
+    .audio-info,
+    .image-info-modal {
+        padding: 8px;
+        font-size: 0.8rem;
+        border-radius: 0.5rem;
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+    
+    .preview-section h4,
+    .image-preview-modal h4,
+    .audio-preview-modal h4,
+    .pdf-preview-modal h4 {
+        font-size: 0.95rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .password-input-group input {
+        padding-right: 50px !important;
+    }
+    .advanced-chat-container {
+        height: 100% !important;
+        min-height: 100%;
+        border-radius: 1rem;
+        margin: 0;
+        width: 100%;
+        border-width: 1px;
+    }
+    
+    /* شريط التحكم - تصغير شديد */
+    .chat-controls-bar {
+        padding: 0.5rem 0.8rem;
+        min-height: 45px;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+    }
+    
+    .chat-stats {
+        gap: 0.5rem;
+        width: 100%;
+        order: 2;
+        margin-top: 0.3rem;
+        justify-content: center;
+    }
+    
+    .stat-item {
+        font-size: 0.75rem;
+        gap: 0.3rem;
+        padding: 0.2rem 0.4rem;
+    }
+    
+    .stat-item i {
+        font-size: 0.8rem;
+    }
+    
+    #refresh-chat-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+    }
+    
+    #clear-chat-btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+        gap: 0.2rem;
+    }
+    
+    /* منطقة الرسائل - تكبير المساحة */
+    .chat-messages-advanced {
+        padding: 0.8rem 0.6rem;
+        flex: 1;
+        min-height: 400px;
+        max-height: calc(100vh - 280px);
+    }
+    
+    /* تعديل هيكل الرسالة للجوال */
+    .message-advanced {
+        margin-bottom: 0.6rem;
+    }
+    
+    .message-inner {
+        max-width: 98%;
+        gap: 0.2rem;
+    }
+    
+    .message-header {
+        gap: 0.4rem;
+    }
+    
+    .message-avatar {
+        width: 26px;
+        height: 26px;
+        min-width: 26px;
+        font-size: 0.8rem;
+    }
+    
+    .sender-name {
+        font-size: 0.8rem;
+    }
+    
+    .message-time-header {
+        font-size: 0.65rem;
+    }
+    
+    /* الرسالة النصية - تصغير */
+    .message-text {
+        padding: 0.5rem 0.7rem;
+        font-size: 0.85rem;
+        line-height: 1.3;
+        border-radius: 0.7rem;
+    }
+    
+    /* الرسالة الصورية - تصغير */
+    .image-message-container {
+        max-width: 140px;
+    }
+    
+    .chat-image {
+        max-height: 100px;
+    }
+    
+    .view-image-btn {
+        width: 22px;
+        height: 22px;
+        font-size: 0.7rem;
+        top: 4px;
+        right: 4px;
+    }
+    
+    /* الرسالة الصوتية - تصغير */
+    .voice-message-container {
+        max-width: 200px;
+    }
+    
+    .voice-message {
+        padding: 0.5rem 0.7rem;
+        gap: 0.6rem;
+    }
+    
+    .play-voice-btn {
+        width: 26px;
+        height: 26px;
+        font-size: 0.7rem;
+    }
+    
+    .voice-waveform {
+        height: 20px;
+        gap: 1.5px;
+    }
+    
+    .voice-waveform .wave {
+        width: 2.5px;
+    }
+    
+    .voice-duration {
+        font-size: 0.7rem;
+        min-width: 40px;
+    }
+    
+    /* الرسالة الملفية - تصغير */
+    .file-message-container {
+        max-width: 220px;
+    }
+    
+    .file-message {
+        padding: 0.5rem 0.7rem;
+        gap: 0.6rem;
+    }
+    
+    .file-icon {
+        width: 26px;
+        height: 26px;
+        font-size: 0.9rem;
+    }
+    
+    .file-name {
+        font-size: 0.8rem;
+    }
+    
+    .file-details {
+        font-size: 0.7rem;
+        gap: 0.6rem;
+    }
+    
+    .play-audio-btn,
+    .download-file-btn {
+        width: 24px;
+        height: 24px;
+        font-size: 0.7rem;
+    }
+    
+    /* أزرار حذف الرسائل */
+    .delete-message-btn {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.65rem;
+        gap: 0.1rem;
+    }
+    
+    /* منطقة الإدخال - تصغير البادينج */
+    .chat-input-advanced {
+        padding: 0.6rem 0.8rem;
+        gap: 0.5rem;
+        min-height: 80px;
+    }
+    
+    /* حقل الإدخال - تكبير المساحة */
+    .advanced-chat-input {
+        padding-right: 7rem !important;
+        padding-top: 0.8rem;
+        padding-bottom: 0.8rem;
+        font-size: 0.8rem;
+        min-height: 46px;
+        max-height: 92px;
+        border-width: 1.5px;
+        border-radius: 0.7rem;
+    }
+    
+    /* الأيقونات داخل الحقل */
+    .input-tools.right {
+        right: 0.5rem;
+        gap: 0.3rem;
+    }
+    
+    .input-tools.left {
+        left: 0.5rem;
+    }
+    
+    .tool-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+    }
+    
+    .send-message-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+    }
+    
+    /* مؤشر التسجيل */
+    .recording-container {
+        padding: 0.6rem;
+    }
+    
+    .recording-status {
+        gap: 0.6rem;
+        margin-bottom: 0.6rem;
+    }
+    
+    .recording-pulse {
+        width: 12px;
+        height: 12px;
+    }
+    
+    .recording-text {
+        font-size: 0.8rem;
+    }
+    
+    .recording-timer {
+        font-size: 0.8rem;
+    }
+    
+    /* أزرار التسجيل في الجوال */
+    .recording-actions {
+        gap: 0.6rem;
+    }
+    
+    .recording-action-btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+        min-width: 70px;
+        gap: 0.3rem;
+    }
+    
+    /* منطقة المعاينة في الجوال */
+    .file-preview-container {
+        max-height: 150px;
+    }
+    
+    /* معاينة الملف - تصغير */
+    .file-preview-header {
+        padding: 0.5rem 0.7rem;
+    }
+    
+    #file-preview-title {
+        font-size: 0.85rem;
+    }
+    
+    .remove-file-btn {
+        width: 22px;
+        height: 22px;
+        font-size: 0.75rem;
+    }
+    
+    .file-preview-body {
+        padding: 0.7rem;
+    }
+    
+    .image-preview img {
+        max-height: 100px;
+    }
+    
+    .file-icon-preview {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+    
+    .file-name-preview {
+        font-size: 0.85rem;
+    }
+    
+    .file-details-preview {
+        font-size: 0.75rem;
+        gap: 0.6rem;
+    }
+    
+    .preview-audio-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+    }
+    
+    /* خط التاريخ */
+    .message-date-divider {
+        margin: 0.8rem 0;
+    }
+    
+    .message-date-divider span {
+        padding: 0.2rem 0.7rem;
+        font-size: 0.75rem;
+    }
+    
+    /* حالة التحميل */
+    .chat-loading {
+        padding: 1.5rem 0.8rem;
+    }
+    
+    .chat-loading .spinner {
+        width: 28px;
+        height: 28px;
+        border-width: 2px;
+        margin-bottom: 0.8rem;
+    }
+    
+    .chat-loading p {
+        font-size: 0.85rem;
+    }
+    
+    /* حالة عدم وجود رسائل */
+    .no-messages {
+        padding: 2rem 0.8rem;
+    }
+    
+    .no-messages i {
+        font-size: 2rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .no-messages h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.3rem;
+    }
+    
+    .no-messages p {
+        font-size: 0.85rem;
+    }
+    /* إجبار 2 في الصف */
+    #exams-table-body.data-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 0.8rem !important;
+    }
+    
+    /* أزرار الأسئلة */
+    .exam-questions-buttons-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 0.3rem !important;
+    }
+    
+    .exam-question-btn-small {
+        min-height: 40px !important;
+        padding: 0.4rem !important;
+        font-size: 0.7rem !important;
+        gap: 0.3rem !important;
+    }
+    
+    .exam-question-btn-small i {
+        font-size: 0.9rem !important;
+    }
+    
+    /* تثبيت الأزرار */
+    #questions-buttons-grid {
+        padding: 0.6rem 0 0.3rem 0 !important;
+    }
+    
+    /* تصميم البطاقات */
+    .exam-card {
+        padding: 1rem !important;
+        min-height: 150px !important;
+    }
+    
+    .exam-card i {
+        font-size: 1.8rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .exam-card h4 {
+        font-size: 0.9rem !important;
+        margin: 0.3rem 0 !important;
+    }
+    
+    .exam-card small.exam-status {
+        font-size: 0.65rem !important;
+        padding: 0.2rem 0.5rem !important;
+        margin-top: 0.3rem !important;
+    }
+    
+    /* تصميم الأسئلة */
+    .question-item {
+        padding: 1rem;
+    }
+    
+    .question-header {
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .question-header h4 {
+        width: auto;
+        text-align: right;
+    }
+    
+    .delete-question {
+        margin-top: 0;
+        align-self: auto;
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+    }
+    .combo-filters-wrapper {
+        flex-direction: row;
+        border-radius: 1rem;
+        overflow: hidden;
+        border-width: 2px;
+        max-width: 100%;
+    }
+    
+    .combo-filter-select {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        min-height: 45px;
+        text-align: right;
+        border: none !important;
+        border-bottom: 1px solid var(--bg-text) !important;
+    }
+    
+    .combo-filter-right {
+        border-bottom: 1px solid var(--bg-text);
+        padding-right: 2.5rem;
+        padding-left: 1rem;
+        background-position: right 1rem center;
+    }
+    
+    .combo-filter-left {
+        padding-right: 2.5rem;
+        padding-left: 1rem;
+        border-bottom: none;
+        background-position: right 1rem center;
+    }
+    
+    /* إزالة الحدود الجانبية في الجوال */
+    .combo-filter-right,
+    .combo-filter-left {
+        border-left: none;
+        border-right: none;
+    }
+    
+    .exams-filters-combo {
+        margin: 1.2rem 0;
+    }
+    /* الشارات في الشاشات الصغيرة */
+    .groups-badge,
+    .active-status-badge,
+    .inactive-status-badge {
+        width: 24px !important;
+        height: 24px !important;
+        font-size: 0.7rem !important;
+        border-width: 1.5px !important;
+    }
+    
+    .groups-badge i,
+    .active-status-badge i,
+    .inactive-status-badge i {
+        font-size: 0.65rem !important;
+    }
+    
+    .groups-badge {
+        top: 8px !important;
+        right: 8px !important;
+    }
+    
+    .active-status-badge,
+    .inactive-status-badge {
+        top: 8px !important;
+        left: 8px !important;
+    }
+    
+    /* تعديل البطاقات نفسها لتناسب الشارات */
+    .exam-card {
+        padding: 1rem !important;
+        min-height: 150px !important;
+    }
+
+    #admin-result-container .results-stats-overview {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    #admin-result-container .results-stat-card {
+        padding: 1rem;
+        min-height: 140px; /* زيادة الارتفاع */
+    }
+    
+    #admin-result-container .results-stat-icon {
+        margin-bottom: 0.3rem;
+        font-size: 1.8rem;
+    }
+    
+    #admin-result-container .results-stat-value {
+        font-size: 1.6rem;
+    }
+    
+    #admin-result-container .results-stat-label {
+        font-size: 1.1rem;
+    }
+    
+    #admin-result-container .results-controls {
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    #admin-result-container .results-filters {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    #admin-result-container .filter-row.combo-row {
+        flex: 1;
+        min-width: 300px;
+    }
+    
+    #admin-result-container .export-btn-wrapper {
+        width: 100%;
+        margin-top: 0;
+    }
+    
+    #admin-result-container .results-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+        padding: 0.8rem;
+    }
+    
+    #admin-result-container .result-card {
+        border-radius: 0.8rem;
+    }
+    
+    #admin-result-container .student-avatar {
+        width: 36px;
+        height: 36px;
+    }
+    
+    #admin-result-container .student-avatar i {
+        font-size: 1.3rem;
+    }
+    
+    #admin-result-container .student-name {
+        font-size: 1.05rem;
+    }
+    
+    #userModalRoot .exam-review-header {
+        padding: 1rem;
+    }
+    
+    #userModalRoot .exam-info-content h3 {
+        font-size: 1.4rem;
+    }
+    
+    #userModalRoot .exam-summary {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.8rem;
+        padding: 1rem;
+    }
+    
+    #userModalRoot .summary-item {
+        padding: 0.8rem;
+    }
+    
+    #userModalRoot .summary-label {
+        font-size: 0.8rem;
+    }
+    
+    #userModalRoot .summary-value {
+        font-size: 1.4rem;
+    }
+    
+    #userModalRoot .exam-questions-review {
+        padding: 1rem;
+    }
+    
+    #userModalRoot .questions-container {
+        padding: 0.5rem 0;
+    }
+    
+    #userModalRoot .exam-info-details {
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+    
+    #userModalRoot .questions-container {
+        padding: 0 0.8rem 0.8rem 0.8rem !important;
+    }
+    
+    #userModalRoot .question-item {
+        padding: 0.8rem;
+    }
+    
+    #userModalRoot .section-title {
+        margin: 0.8rem !important;
+    }
+    
+    #userModalRoot .manual-correction-note {
+        margin: 0 0.8rem 0.8rem 0.8rem !important;
+    }
+    #admin-result-container .attendance-stats-overview {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    #admin-result-container .attendance-stat-card {
+        padding: 1rem;
+        min-height: 140px; 
+    }
+    
+    #admin-result-container .attendance-stat-icon {
+        font-size: 1.8rem;
+        margin-bottom: 0.3rem;
+    }
+    
+    #admin-result-container .attendance-stat-value {
+        font-size: 1.6rem;
+    }
+    
+    #admin-result-container .attendance-stat-label {
+        font-size: 1.1rem;
+    }
+    #admin-result-container .attendance-lectures-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+        margin-top: 1rem;
+    }
+    
+    #admin-result-container .attendance-lecture-header {
+        padding: 0.6rem;
+        gap: 0.5rem;
+    }
+    
+    #admin-result-container .attendance-lecture-title {
+        font-size: 0.9rem;
+    }
+    
+    #admin-result-container .attendance-lecture-meta {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.4rem;
+        font-size: 0.7rem;
+    }
+    
+    #admin-result-container .attendance-lecture-meta span {
+        padding: 0.2rem 0.4rem;
+    }
+    
+    #admin-result-container .attendance-lecture-stats {
+        padding: 0.5rem;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.4rem;
+    }
+    
+    #admin-result-container .attendance-stat-item {
+        padding: 0.3rem 0.4rem;
+    }
+    
+    #admin-result-container .attendance-stat-label {
+        font-size: 0.65rem;
+    }
+    
+    #admin-result-container .attendance-stat-value {
+        font-size: 0.8rem;
+    }
+    
+    #admin-result-container .attendance-lecture-actions {
+        padding: 0.5rem;
+    }
+    
+    #admin-result-container .attendance-action-btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+        gap: 0.3rem;
+    }
+    
+    #admin-result-container .attendance-action-btn span {
+        font-size: 0.75rem;
+    }
+    
+    #admin-result-container .combo-filters-wrapper {
+        height: 40px;
+    }
+    
+    #admin-result-container .combo-filter-select {
+        font-size: 0.8rem;
+        padding-left: 2rem;
+        background-size: 10px;
+        background-position: left 0.5rem center;
+    }
+    #userModalRoot .attendance-lecture-info {
+        flex-direction: column;
+        text-align: center;
+        padding: 0.8rem;
+        gap: 0.8rem;
+    }
+    
+    #userModalRoot .attendance-lecture-icon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    #userModalRoot .attendance-lecture-icon i {
+        font-size: 1.5rem;
+    }
+    
+    #userModalRoot .attendance-lecture-details h3 {
+        font-size: 1.1rem;
+    }
+    
+    #userModalRoot .attendance-lecture-meta-details {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    #userModalRoot .attendance-student-item {
+        padding: 0.5rem;
+        gap: 0.6rem;
+    }
+    
+    #userModalRoot .student-avatar {
+        width: 32px;
+        height: 32px;
+    }
+    
+    #userModalRoot .student-avatar i {
+        font-size: 1rem;
+    }
+    
+    #userModalRoot .student-name {
+        font-size: 0.85rem;
+    }
+    
+    #userModalRoot .student-email {
+        font-size: 0.7rem;
+    }
+    
+    #userModalRoot .student-status-combo {
+        height: 35px;
+    }
+    
+    #userModalRoot .status-badge {
+        padding: 0 0.5rem;
+        font-size: 0.7rem;
+    }
+    
+    #userModalRoot .status-select.combo-select-right {
+        padding: 0 1.8rem 0 0.6rem;
+        font-size: 0.8rem;
+        background-size: 10px;
+        background-position: left 0.4rem center;
+    }
+    
+    #userModalRoot .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.4rem;
+    }
+    
+    #userModalRoot .stat-btn {
+        padding: 0.5rem;
+        font-size: 0.75rem;
+        gap: 0.3rem;
+    }
+    
+    #userModalRoot .no-students {
+        padding: 2rem 1rem;
+    }
+    
+    #userModalRoot .no-students i {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    #userModalRoot .no-students span {
+        font-size: 1rem;
+    }
+    #userModalRoot .exam-review-header {
+        padding: 1rem;
+    }
+    
+    #userModalRoot .exam-info-card {
+        gap: 0.8rem;
+    }
+    
+    #userModalRoot .exam-info-icon {
+        width: 45px;
+        height: 45px;
+    }
+    
+    #userModalRoot .exam-info-icon i {
+        font-size: 1.3rem;
+        padding: 0.1rem;
+    }
+    
+    #userModalRoot .exam-summary {
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 0.5rem;
+        padding: 0.8rem;
+        margin-top: 0.8rem;
+    }
+    
+    #userModalRoot .summary-item {
+        min-height: 75px;
+        padding: 0.6rem;
+    }
+    
+    #userModalRoot .summary-label {
+        font-size: 0.8rem;
+    }
+    
+    #userModalRoot .summary-value {
+        font-size: 1.4rem;
+    }
+   
+    #userModalRoot .exam-info-content {
+        text-align: right;
+        width: 100%;
+    }
+
+    #userModalRoot .exam-info-content h3 {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        text-align: right;
+        line-height: 1.3;
+        word-break: break-word;
+        padding-left: 0.5rem;
+    }
+
+    #userModalRoot .exam-info-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        width: 100%;
+        text-align: right;
+    }
+
+    #userModalRoot .exam-info-details span {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.6rem 0.8rem;
+        background: rgba(var(--bg-text-rgb), 0.05);
+        border-radius: 0.5rem;
+        border: 1px solid rgba(var(--bg-text-rgb), 0.1);
+        font-size: 0.8rem;
+        min-height: 42px;
+        box-sizing: border-box;
+        text-align: right;
+        direction: rtl;
+        width: 100%;
+    }
+
+    #userModalRoot .exam-info-details i {
+        font-size: 0.9rem;
+        color: rgba(var(--bg-text-rgb), 0.7);
+        flex-shrink: 0;
+        margin-left: 0.5rem;
+    }
+
+    /* تحسين النصوص الطويلة */
+    #userModalRoot .exam-info-details span {
+        word-break: break-word;
+        white-space: normal;
+        line-height: 1.4;
+    }
+
+    /* خاصة البريد الإلكتروني */
+    #userModalRoot .exam-info-details span:nth-child(2) {
+        word-break: break-all;
+    }
+}
+
+/* ==================================================
+   MEDIUM SCREENS (481px - 768px)
+================================================== */
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+    /* تحسينات المودال للشاشات المتوسطة */
+    .modal-backdrop {
+        padding: 12px;
+    }
+    
+    .modal-content-new {
+        width: 92% !important;
+        max-width: 92% !important;
+        height: 88vh !important;
+        max-height: 88vh !important;
+        min-height: 88vh !important;
+    }
+    
+    /* تحسين الهيدر */
+    .modal-header {
+        padding: 1.2rem 1.5rem !important;
+        min-height: 65px;
+    }
+    
+    .modal-header h2 {
+        font-size: 1.5rem !important;
+    }
+    
+    /* تحسين محتوى النموذج */
+    .form-compact-new {
+        padding: 1.8rem 1.5rem !important;
+        min-height: calc(88vh - 150px) !important;
+        max-height: calc(88vh - 150px) !important;
+        /* مسافة للفوتر */
+        padding-bottom: 110px !important;
+    }
+    
+    /* تحسين الأزرار */
+    .form-actions {
+        padding: 1.2rem 1.5rem !important;
+        gap: 0.8rem !important;
+        min-height: 75px;
+        /* مسافة فوق الفوتر */
+        margin-top: 15px !important;
+    }
+    
+    /* حالة زر واحد فقط */
+    .form-actions:has(.grid-btn:only-child) .grid-btn {
+        width: 100% !important;
+        max-width: 400px !important;
+        margin: 0 auto !important;
+    }
+    
+    /* حالتين للأزرار */
+    .form-actions:has(.grid-btn:nth-child(2):last-child) {
+        justify-content: space-between !important;
+    }
+    
+    .form-actions:has(.grid-btn:nth-child(2):last-child) .grid-btn {
+        flex: 0 0 calc(50% - 0.4rem) !important;
+        max-width: calc(50% - 0.4rem) !important;
+        padding: 0.8rem 1rem !important;
+        font-size: 0.9rem !important;
+    }
+    
+    /* ثلاث أزرار أو أكثر */
+    .form-actions:has(.grid-btn:nth-child(3)) .grid-btn {
+        flex: 1 !important;
+        min-width: calc(33.333% - 0.6rem) !important;
+        padding: 0.7rem 0.8rem !important;
+        font-size: 0.85rem !important;
+    }
+    
+    /* تحسين حقول الإدخال */
+    .form-compact-new input,
+    .form-compact-new select,
+    .form-compact-new textarea,
+    .admin-form input,
+    .admin-form select,
+    .admin-form textarea {
+        padding: 0.75rem 1rem !important;
+        font-size: 0.95rem !important;
+    }
+    
+    /* تحسين شبكة الأيقونات */
+    .icon-grid {
+        max-height: 160px !important;
+        grid-template-columns: repeat(auto-fill, minmax(36px, 1fr)) !important;
+        gap: 0.4rem !important;
+    }
+    
+    .icon-option {
+        width: 36px !important;
+        height: 36px !important;
+    }
+    
+    /* تحسين التمرير */
+    .form-compact-new::-webkit-scrollbar {
+        width: 8px !important;
+    }
+    
+    /* ==================== إصلاحات قسم رسالة الترحيب ==================== */
+    .admin-form {
+        padding: 1rem 0 !important;
+    }
+    
+    .admin-form .form-group {
+        margin-bottom: 1.5rem !important;
+    }
+    
+    .admin-form .form-buttons {
+        margin-top: 2rem !important;
+    }
+    
+    .admin-form .btn {
+        width: 90% !important;
+        max-width: 350px !important;
+        padding: 0.9rem 1.5rem !important;
+    }
+
+    .messages-filters {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        padding: 0.8rem;
+    }
+    
+    .messages-filters select {
+        padding: 0.8rem 1rem;
+        font-size: 0.95rem;
+    }
+    
+    .message-sender-info {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.2rem;
+        gap: 1rem;
+    }
+    
+    .sender-avatar {
+        width: 70px;
+        height: 70px;
+        font-size: 2.2rem;
+    }
+    
+    .sender-name {
+        font-size: 1.3rem;
+    }
+    
+    .message-meta-info {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        padding: 1rem;
+    }
+    
+    .meta-item {
+        justify-content: space-between;
+    }
+    
+    .message-content-container {
+        padding: 1.2rem;
+    }
+    
+    .message-text-large {
+        padding: 1rem;
+        font-size: 1rem;
+        max-height: 250px;
+    }
+
+    .multi-select-grid {
+        max-height: 450px;
+        padding: 0.9rem;
+    }
+
+    .subjects-tabs-scroll {
+        gap: 0.8rem;
+    }
+    
+    .subject-tab-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.95rem;
+    }
+    
+    .content-type-tabs {
+        gap: 0.8rem;
+        padding: 0.8rem;
+    }
+    
+    .content-type-tab {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.95rem;
+    }
+    
+    .content-card {
+        padding: 1.2rem;
+    }
+    
+    .content-card-icon {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .content-card-icon i {
+        font-size: 1.8rem;
+    }
+    
+    .content-card-title {
+        font-size: 1rem;
+    }
+
+    .content-card {
+        padding: 1.2rem;
+    }
+    
+    .image-preview-container {
+        height: 110px;
+    }
+     #file-preview img {
+        max-height: 200px;
+        max-width: 90%;
+        padding: 8px;
+        border-radius: 0.6rem;
+    }
+    
+    .preview-section img,
+    .preview-section .preview-image,
+    .image-preview-modal img {
+        max-height: 220px;
+        max-width: 90%;
+        padding: 10px;
+        border-radius: 0.6rem;
+    }
+    
+    .preview-section,
+    .image-preview-modal,
+    .audio-preview-modal,
+    .pdf-preview-modal {
+        padding: 1rem;
+        border-radius: 0.75rem;
+    }
+    
+    #file-preview div,
+    .image-info,
+    .audio-info,
+    .image-info-modal {
+        padding: 10px;
+        font-size: 0.85rem;
+        border-radius: 0.6rem;
+    }
+    
+    .preview-section h4,
+    .image-preview-modal h4,
+    .audio-preview-modal h4,
+    .pdf-preview-modal h4 {
+        font-size: 1rem;
+        margin-bottom: 0.8rem;
+    }
+    /* شبكة البطاقات */
+    #exams-table-body.data-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important;
+    }
+    
+    /* أزرار الأسئلة */
+    .exam-questions-buttons-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 0.5rem !important;
+    }
+    
+    .exam-question-btn-small {
+        padding: 0.6rem 0.3rem !important;
+        font-size: 0.8rem !important;
+        min-height: 50px !important;
+    }
+    
+    .exam-question-btn-small i {
+        font-size: 1rem !important;
+    }
+    
+    /* تثبيت الأزرار */
+    #questions-buttons-grid {
+        padding: 0.8rem 0 0.4rem 0 !important;
+    }
+    
+    /* تصميم الأسئلة */
+    .question-header {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .question-header h4 {
+        font-size: 1rem;
+    }
+    
+    .option-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+    }
+    
+    .option-label {
+        min-width: 100%;
+        justify-content: space-between;
+    }
+    
+    .option-text {
+        width: 100%;
+    }
+     .exams-filters-combo {
+        margin: 1.5rem 0;
+    }
+    
+    .combo-filters-wrapper {
+        max-width: 100%;
+    }
+    
+    .combo-filter-select {
+        padding: 0.8rem 1rem;
+        font-size: 0.95rem;
+        min-height: 45px;
+        background-position: left 1rem center;
+        padding-left: 2.5rem;
+    }
+    
+    .combo-filter-right {
+        padding-right: 2.5rem;
+        padding-left: 1rem;
+    }
+    /* الشارات في الشاشات المتوسطة */
+    .groups-badge,
+    .active-status-badge,
+    .inactive-status-badge {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 0.75rem !important;
+    }
+    
+    .groups-badge i,
+    .active-status-badge i,
+    .inactive-status-badge i {
+        font-size: 0.7rem !important;
+    }
+    
+    .groups-badge {
+        top: 10px !important;
+        right: 10px !important;
+    }
+    
+    .active-status-badge,
+    .inactive-status-badge {
+        top: 10px !important;
+        left: 10px !important;
+    }
+    #admin-result-container .results-stats-overview {
+        gap: 1.2rem;
+        margin-bottom: 2rem;
+    }
+    
+    #admin-result-container .results-stat-card {
+        padding: 1.2rem;
+        border-radius: 1rem;
+        min-height: 160px;
+    }
+    
+    #admin-result-container .results-controls {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 1.2rem;
+        gap: 1rem;
+    }
+    
+    #admin-result-container .results-search {
+        flex: 1;
+        min-width: 250px;
+    }
+    
+    #admin-result-container .results-filters {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    #admin-result-container .filter-row.combo-row {
+        min-width: 0;
+        height: 46px;
+    }
+    
+    #admin-result-container .combo-filter-select {
+        font-size: 0.9rem;
+        padding-left: 2.8rem;
+    }
+    
+    #admin-result-container .export-btn-wrapper {
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+    
+    #admin-result-container .results-group-header {
+        padding: 1rem 1.2rem;
+    }
+    
+    #admin-result-container .results-cards-grid {
+        gap: 1.2rem;
+        padding: 1.5rem;
+    }
+    
+    #userModalRoot .exam-review-header {
+        padding: 1.2rem;
+    }
+    
+    #userModalRoot .exam-info-card {
+        gap: 1rem;
+    }
+    
+    #userModalRoot .exam-info-icon {
+        font-size: 2.5rem;
+    }
+    
+    #userModalRoot .exam-info-content h3 {
+        font-size: 1.6rem;
+    }
+    
+    #userModalRoot .exam-info-details {
+        font-size: 0.9rem;
+        gap: 1rem;
+    }
+    
+    #userModalRoot .exam-summary {
+        gap: 1rem;
+        padding: 1.2rem;
+    }
+    
+    #userModalRoot .summary-item {
+        padding: 1rem;
+    }
+    
+    #userModalRoot .summary-label {
+        font-size: 1.4rem;
+    }
+    
+    #userModalRoot .summary-value {
+        font-size: 1.6rem;
+    }
+    
+    #userModalRoot .exam-questions-review {
+        padding: 1.2rem;
+    }
+    
+    #userModalRoot .questions-container {
+        gap: 1.2rem;
+        padding: 0.8rem 0;
+    }
+
+    #userModalRoot .attendance-lecture-meta-details {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.6rem;
+    }
+}
+
+/* ==================================================
+   تحسينات إضافية للوضع الأفقي على الجوال
+================================================== */
+@media only screen and (max-height: 500px) and (orientation: landscape) {
+    .modal-backdrop {
+        align-items: center;
+        padding: 5px;
+    }
+    
+    .modal-content-new {
+        height: 95vh !important;
+        max-height: 95vh !important;
+        width: 90% !important;
+        border-radius: 1rem;
+    }
+    
+    .form-actions {
+        position: sticky !important;
+        bottom: 0;
+        margin-top: 10px !important;
+    }
+    
+    .icon-grid {
+        max-height: 90px !important;
+    }
+    
+    .form-compact-new {
+        min-height: calc(95vh - 140px) !important;
+        max-height: calc(95vh - 140px) !important;
+        padding-bottom: 100px !important;
+    }
+    #file-preview img {
+        max-height: 150px;
+    }
+    
+    .preview-section img,
+    .preview-section .preview-image,
+    .image-preview-modal img {
+        max-height: 180px;
+    }
+    
+    .preview-section,
+    .image-preview-modal,
+    .audio-preview-modal,
+    .pdf-preview-modal {
+        padding: 0.8rem;
+    }
+    
+    .password-input-group input {
+        padding-right: 50px !important;
+    }
+}
+
+/* ==================================================
+   تحسينات للشاشات الكبيرة جداً
+================================================== */
+@media only screen and (min-width: 1200px) {
+    .modal-content-new {
+        max-width: 700px;
+    }
+    
+    .form-actions {
+        justify-content: flex-end;
+        margin-top: 25px;
+    }
+    
+    .form-actions:has(.grid-btn:nth-child(2):last-child) .grid-btn {
+        flex: 0 0 auto !important;
+        width: auto !important;
+        min-width: 150px !important;
+    }
+}
+
